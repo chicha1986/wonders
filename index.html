@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>英語單字評量站</title>
+<meta name="description" content="國小英語單字互動評量索引頁">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Noto+Sans+TC:wght@400;500;700;900&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  --ground:#E9F3FF; --surface:#FFFFFF; --surface2:#F4F9FF;
+  --ink:#1B2A4A; --muted:#6A7C9B; --line:#CFE1F7;
+  --accent:#2F7FF0; --accent-ink:#1A5FC4; --accent-soft:#DDEBFF;
+  --good:#0FA059; --good-ink:#0A7C44; --good-soft:#D6F4E5;
+  --amber:#E9760C; --amber-soft:#FFEBD4;
+  --purple:#7B57E8; --purple-soft:#EBE4FF;
+  --pink:#E5468F; --pink-soft:#FFE1EE;
+  --on-accent:#FFFFFF;
+  --shadow:0 2px 0 rgba(27,42,74,.06), 0 14px 30px -20px rgba(27,42,74,.55);
+  --display:"Fredoka","Noto Sans TC",-apple-system,sans-serif;
+  --body:"Nunito","Noto Sans TC",-apple-system,"Segoe UI",sans-serif;
+  --han:"Noto Sans TC","Nunito",sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; color:var(--ink);
+  background-color:var(--ground);
+  background-image:
+    radial-gradient(780px 420px at 8% -10%, #FFE7BF 0%, rgba(255,231,191,0) 62%),
+    radial-gradient(700px 380px at 96% -2%, #E2DDFF 0%, rgba(226,221,255,0) 64%);
+  background-repeat:no-repeat; background-attachment:fixed;
+  font-family:var(--body); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:900px; margin:0 auto; padding:26px 18px 80px}
+:focus-visible{outline:3px solid var(--amber); outline-offset:3px; border-radius:10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.masthead{padding-bottom:18px; border-bottom:3px dotted var(--line); margin-bottom:12px}
+.eyebrow{font-size:11.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
+h1{font-family:var(--display); font-size:clamp(32px,6.5vw,50px); font-weight:600; margin:4px 0 0; line-height:1.2; text-wrap:balance}
+h1 b{font-weight:600; color:var(--accent)}
+.sub{font-family:var(--han); font-size:14.5px; color:var(--muted); margin-top:6px}
+
+.groupbar{display:flex; align-items:center; gap:10px; margin:32px 0 14px}
+.groupbar h2{font-family:var(--han); font-size:14px; font-weight:700; letter-spacing:.04em; color:var(--ink); margin:0; white-space:nowrap}
+.groupbar::after{content:""; flex:1; height:3px; background:var(--line); border-radius:3px}
+.count{font-family:var(--body); font-size:12px; font-weight:800; color:#fff; background:var(--accent); border-radius:999px; padding:3px 11px; font-variant-numeric:tabular-nums}
+
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px}
+.item{
+  display:flex; flex-direction:column; gap:8px; text-decoration:none; color:inherit;
+  background:var(--surface); border:3px solid var(--line); border-radius:20px;
+  padding:20px 20px 18px; box-shadow:var(--shadow); position:relative; overflow:hidden;
+  transition:transform .16s ease, border-color .16s ease;
+}
+.item::before{content:""; position:absolute; inset:0 0 auto 0; height:7px; background:var(--accent)}
+.item:nth-child(3n+2)::before{background:var(--amber)}
+.item:nth-child(3n+3)::before{background:var(--purple)}
+.item:hover{transform:translateY(-4px); border-color:var(--accent)}
+.item .unit{font-family:var(--body); font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-top:4px}
+.item h3{font-family:var(--display); font-size:25px; font-weight:600; margin:0; line-height:1.25}
+.item p{font-family:var(--han); font-size:13.5px; color:var(--muted); margin:0; line-height:1.75}
+.metas{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px}
+.meta{font-family:var(--han); font-size:11.5px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); border-radius:8px; padding:4px 9px}
+.open{
+  margin-top:auto; align-self:flex-start; margin-top:14px;
+  font-family:var(--han); font-size:14px; font-weight:700; color:#fff; background:var(--accent);
+  border-radius:999px; padding:8px 16px; display:flex; align-items:center; gap:7px;
+  box-shadow:0 3px 0 var(--accent-ink);
+}
+.item:hover .open span{transform:translateX(4px)}
+.open span{display:inline-block; transition:transform .16s ease}
+
+.item.soon{border-style:dashed; background:var(--surface2); box-shadow:none; cursor:default}
+.item.soon::before{background:var(--line)}
+.item.soon:hover{transform:none; border-color:var(--line)}
+.item.soon .unit,.item.soon h3{color:var(--muted)}
+.item.soon .open{background:var(--line); color:var(--muted); box-shadow:none}
+
+footer{margin-top:44px; padding-top:18px; border-top:3px dotted var(--line); font-family:var(--han); font-size:12.5px; color:var(--muted); line-height:1.9}
+footer code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; background:var(--purple-soft); color:var(--purple); border-radius:6px; padding:1px 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="masthead">
+    <div>
+      <div class="eyebrow">Elementary English · Vocabulary Practice</div>
+      <h1>英語<b>單字</b>評量站</h1>
+      <div class="sub">點下面的卡片就可以開始練習，每次題目順序都會重新隨機排列。</div>
+    </div>
+  </header>
+
+  <main id="board"></main>
+
+  <footer>
+    製作給國小五年級複習使用 · 手機、平板、電腦都可以直接開啟。<br>
+    要新增新的評量，只要把新的 <code>.html</code> 放進同一個資料夾，再到本檔案最下方的 <code>PAGES</code> 清單加一行就好。
+  </footer>
+</div>
+
+<script>
+/* ============================================================
+   要新增一份新的評量，只要在下面加一筆資料就好：
+
+   {
+     group: "Grade 5",              // 分組標題，同一個 group 會排在一起
+     unit:  "Unit 2",               // 卡片上方的小標
+     title: "課次或單元名稱",         // 卡片大標
+     desc:  "一句話說明",            // 卡片說明
+     metas: ["15 個字詞", "150 句"], // 小標籤，可留空陣列 []
+     file:  "unit2-xxx.html"        // 檔名；還沒做好就寫 null，會顯示為「準備中」
+   }
+
+   檔案要跟 index.html 放在同一個資料夾裡。
+   ============================================================ */
+const PAGES = [
+  {
+    group: "五年級 · Friends and Family",
+    unit:  "Unit 1 · G3U1W1 1-15",
+    title: "Wolf! 1-15 單字闖關",
+    desc:  "15 個字詞、150 句全新例句。動詞要選對過去式，名詞要選對複數，答完立刻看中文解釋。",
+    metas: ["15 個字詞", "150 句例句", "15 / 30 題可選"],
+    file:  "unit1_wolf-1-15.html"
+  },
+  {
+    group: "五年級 · Friends and Family",
+    unit:  "Unit 2",
+    title: "準備中",
+    desc:  "下一份評量放進資料夾後，把這一筆的 file 改成新檔名就會自動變成可點的連結。",
+    metas: [],
+    file:  null
+  }
+];
+
+/* ---------- 以下不需要修改 ---------- */
+(function(){
+  const board = document.getElementById('board');
+  const groups = [];
+  PAGES.forEach(p => {
+    let g = groups.find(x => x.name === p.group);
+    if(!g){ g = {name:p.group, items:[]}; groups.push(g); }
+    g.items.push(p);
+  });
+
+  groups.forEach(g => {
+    const ready = g.items.filter(i => i.file).length;
+    const bar = document.createElement('div');
+    bar.className = 'groupbar';
+    bar.innerHTML = '<h2>' + g.name + '</h2><span class="count">' + ready + ' 份</span>';
+    board.appendChild(bar);
+
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+    g.items.forEach(p => {
+      const live = !!p.file;
+      const card = document.createElement(live ? 'a' : 'div');
+      card.className = 'item' + (live ? '' : ' soon');
+      if(live) card.href = p.file;
+      const metas = (p.metas || []).map(m => '<span class="meta">' + m + '</span>').join('');
+      card.innerHTML =
+        '<div class="unit">' + p.unit + '</div>' +
+        '<h3>' + p.title + '</h3>' +
+        '<p>' + p.desc + '</p>' +
+        (metas ? '<div class="metas">' + metas + '</div>' : '') +
+        '<div class="open">' + (live ? '開始作答 <span>→</span>' : '準備中') + '</div>';
+      grid.appendChild(card);
+    });
+    board.appendChild(grid);
+  });
+
+})();
+</script>
+</body>
+</html>
