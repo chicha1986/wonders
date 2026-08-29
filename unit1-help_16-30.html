@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ROBLOX OBBY · Grade 2 Word Quest</title>
+<title>ROBLOX OBBY · Grade 2 Sentence & Forms Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap">
@@ -22,6 +22,7 @@
   --rbx-red-dark: #BA1A1A;
   --rbx-gold: #FFC400;
   --rbx-gold-dark: #C69500;
+  --rbx-purple: #B388FF;
   
   --ink: #FFFFFF;
   --muted: #BDC3C7;
@@ -42,9 +43,9 @@ body{
   user-select:none;
 }
 
-.wrap{max-width:820px; margin:0 auto; padding:18px 16px 80px;}
+.wrap{max-width:840px; margin:0 auto; padding:18px 16px 80px;}
 
-/* ---------- Roblox 3D 卡片與通用按鈕 ---------- */
+/* ---------- Roblox 3D 卡片與按鈕 ---------- */
 .rbx-card{
   background: var(--rbx-card);
   border: 3px solid var(--rbx-border);
@@ -70,13 +71,6 @@ body{
   transition: all 0.08s ease;
 }
 
-.rbx-btn-blue{
-  background: var(--rbx-blue);
-  box-shadow: 0 6px 0 var(--rbx-blue-dark);
-}
-.rbx-btn-blue:hover{ background: #1AB0FF; }
-.rbx-btn-blue:active{ transform: translateY(4px); box-shadow: 0 2px 0 var(--rbx-blue-dark); }
-
 .rbx-btn-green{
   background: var(--rbx-green);
   color: #0A3D1E;
@@ -101,7 +95,7 @@ body{
 .rbx-btn-gray:hover{ background: #484A4D; }
 .rbx-btn-gray:active{ transform: translateY(3px); box-shadow: 0 2px 0 #212325; }
 
-/* ---------- 頂部 HUD (Robux 積分 / 關卡) ---------- */
+/* ---------- 頂部 HUD ---------- */
 .status-bar{
   background: rgba(35, 37, 39, 0.95);
   border: 2.5px solid var(--rbx-border);
@@ -134,37 +128,17 @@ body{
   color:var(--rbx-blue); background:rgba(0,162,255,0.15); border:2px solid var(--rbx-blue);
   border-radius:99px; padding:4px 16px; margin-bottom:12px;
 }
-h1{font-size:clamp(30px,6vw,42px); font-weight:800; margin:0; line-height:1.2; letter-spacing:1px}
+h1{font-size:clamp(28px,6vw,40px); font-weight:800; margin:0; line-height:1.2; letter-spacing:1px}
 h1 span{color:var(--rbx-blue)}
 .hero-desc{color:var(--muted); font-size:15px; margin-top:8px; font-family:var(--font-tc)}
 
-.stats-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:16px 0 24px}
+.stats-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin:20px 0 24px}
 .stat-box{
   background:rgba(255,255,255,0.03); border:2px solid var(--rbx-border); border-radius:14px;
   padding:14px; text-align:center;
 }
 .stat-box .val{font-size:26px; font-weight:800; color:var(--rbx-gold)}
 .stat-box .lbl{font-size:13px; color:var(--muted); font-family:var(--font-tc); margin-top:2px}
-
-/* ---------- 模式選擇卡片 ---------- */
-.mode-section-title{
-  font-size: 15.5px; font-weight: 800; color: var(--rbx-blue); margin-bottom: 12px; display: block; font-family: var(--font-tc);
-}
-.modes-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px}
-@media(max-width:560px){.modes-grid{grid-template-columns:1fr}}
-
-.mode-card{
-  background: #2B2D30; border: 2.5px solid var(--rbx-border); border-radius: 16px;
-  padding: 16px; color: var(--ink); text-align: left; cursor: pointer; transition: all .12s;
-  box-shadow: 0 5px 0 #18191A;
-}
-.mode-card:hover{ background: #35373A; border-color: var(--rbx-blue); }
-.mode-card[aria-pressed="true"]{
-  background: rgba(0, 162, 255, 0.12); border-color: var(--rbx-blue);
-  box-shadow: 0 5px 0 var(--rbx-blue-dark);
-}
-.mode-card b{font-size: 19px; font-weight: 800; color: var(--rbx-blue); display: block; margin-bottom: 4px;}
-.mode-card span{font-size: 13.5px; color: var(--muted); display: block; font-family: var(--font-tc); line-height: 1.4;}
 
 /* ---------- Quiz HUD ---------- */
 .hud{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px}
@@ -180,106 +154,120 @@ h1 span{color:var(--rbx-blue)}
 }
 @keyframes popCombo{from{transform:scale(0.8)} to{transform:scale(1)}}
 
-/* 題目展示盒 */
+/* 題目卡片（句子） */
 .question-box{
   background: var(--rbx-card-top);
   border: 2px solid var(--rbx-border);
   border-radius: 16px;
-  padding: 24px 20px;
+  padding: 22px 20px;
   margin-bottom: 20px;
-  text-align: center;
 }
-.q-title-main{
-  font-size: clamp(26px, 5.5vw, 40px);
-  font-weight: 800;
-  color: var(--rbx-blue);
-  margin: 0 0 10px;
-  letter-spacing: 0.5px;
-  line-height: 1.4;
-}
-/* 模式 A 題目為長句子時的微調 */
-.mode-a-text{
-  font-size: clamp(19px, 4vw, 24px) !important;
-  color: #FFF !important;
-  font-family: var(--font-tc), var(--font-game);
-  text-align: left;
+.q-meta{display:flex; align-items:center; gap:8px; margin-bottom:12px}
+.q-num{font-size:15px; font-weight:800; color:var(--rbx-blue)}
+.q-pos-badge{
+  background: rgba(179, 136, 255, 0.15); border: 1.5px solid var(--rbx-purple);
+  color: var(--rbx-purple); font-size: 13px; font-weight: 800; padding: 2px 10px; border-radius: 99px;
 }
 
-.q-subtags{display:flex; justify-content:center; gap:8px; align-items:center; flex-wrap:wrap}
-.pos-tag{
-  background: rgba(255, 196, 0, 0.15);
-  border: 1.5px solid var(--rbx-gold);
-  color: var(--rbx-gold);
-  font-size: 14px;
-  font-weight: 800;
-  padding: 2px 14px;
-  border-radius: 99px;
-}
-.tense-tag{
-  background: rgba(0, 230, 118, 0.15);
-  border: 1.5px solid var(--rbx-green);
-  color: #A4FFAF;
-  font-size: 13.5px;
-  font-weight: 800;
-  padding: 2px 14px;
-  border-radius: 99px;
-  font-family: var(--font-tc);
-}
-
-.options-title{
-  font-size: 15px; font-weight: 700; color: var(--muted); margin: 0 0 12px; font-family: var(--font-tc);
-}
-.options-grid{display:flex; flex-direction:column; gap:10px}
-.opt-btn{
-  background: #2E3033;
-  border: 2.5px solid var(--rbx-border);
-  border-radius: 14px;
-  padding: 14px 18px;
-  color: #FFF;
-  font-size: 16.5px;
+.sentence-text{
+  font-size: clamp(20px, 4.5vw, 26px);
+  line-height: 1.6;
   font-weight: 700;
-  text-align: left;
-  line-height: 1.5;
-  cursor: pointer;
-  box-shadow: 0 5px 0 #18191A;
-  transition: all 0.08s ease;
-  font-family: var(--font-game), var(--font-tc);
+  margin: 0;
+  letter-spacing: 0.5px;
 }
-.opt-btn:hover{ background: #383A3D; border-color: var(--rbx-blue); }
-.opt-btn:active{ transform: translateY(3px); box-shadow: 0 2px 0 #18191A; }
-
-/* 模式 A 選單字時的選項排版（更大更醒目） */
-.opt-btn.word-opt{
-  font-size: 22px;
+.blank-slot{
+  display: inline-block;
+  min-width: 130px;
+  text-align: center;
+  background: rgba(255, 196, 0, 0.12);
+  border: 2.5px dashed var(--rbx-gold);
+  border-radius: 12px;
+  color: var(--rbx-gold);
   font-weight: 800;
-  color: #00E676;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 0 12px;
+  margin: 0 4px;
 }
-.opt-btn.word-opt em{
-  font-style: normal;
-  font-size: 14px;
-  color: var(--muted);
-  font-weight: normal;
-  font-family: var(--font-tc);
+.blank-slot.good{
+  background: rgba(0, 230, 118, 0.2);
+  border: 2.5px solid var(--rbx-green);
+  color: #A4FFAF;
 }
-
-/* 選對 / 選錯樣式 */
-.opt-btn.correct{
-  background: rgba(0, 230, 118, 0.2) !important;
-  border-color: var(--rbx-green) !important;
-  color: #A4FFAF !important;
-  box-shadow: 0 5px 0 var(--rbx-green-dark) !important;
-}
-.opt-btn.wrong{
-  background: rgba(255, 59, 48, 0.2) !important;
-  border-color: var(--rbx-red) !important;
-  color: #FFA4A4 !important;
-  box-shadow: 0 5px 0 var(--rbx-red-dark) !important;
-  animation: shake 0.3s ease-in-out;
+.blank-slot.bad{
+  background: rgba(255, 59, 48, 0.2);
+  border: 2.5px solid var(--rbx-red);
+  color: #FFA4A4;
+  animation: shake .3s ease-in-out;
 }
 @keyframes shake{0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)}}
+
+/* 互動區域 */
+.section-label{
+  font-size: 14.5px; font-weight: 700; color: var(--muted); margin: 18px 0 10px; font-family: var(--font-tc);
+  display: flex; align-items: center; gap: 8px;
+}
+.section-label::after{ content:""; flex:1; height:1px; background:var(--rbx-border); }
+
+/* 步驟 1：單詞庫按鈕 */
+.word-bank{display:flex; flex-wrap:wrap; gap:9px}
+.word-btn{
+  background: #2E3033;
+  border: 2.5px solid var(--rbx-border);
+  border-radius: 12px;
+  padding: 10px 16px;
+  color: #FFF;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #18191A;
+  transition: all 0.08s ease;
+}
+.word-btn:hover{ background: #393B3E; border-color: var(--rbx-blue); }
+.word-btn:active{ transform: translateY(2px); box-shadow: 0 2px 0 #18191A; }
+.word-btn.selected{
+  background: var(--rbx-blue);
+  border-color: var(--rbx-blue);
+  color: #FFF;
+  box-shadow: 0 4px 0 var(--rbx-blue-dark);
+}
+
+/* 步驟 2：詞性與變形面板 */
+.forms-panel{
+  margin-top: 16px;
+  background: rgba(0, 162, 255, 0.08);
+  border: 2.5px dashed var(--rbx-blue);
+  border-radius: 16px;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:translateY(0)}}
+
+.forms-header{
+  font-size: 14.5px; font-weight: 700; color: #A4DCFF; margin: 0 0 12px; font-family: var(--font-tc);
+}
+.forms-grid{display:flex; flex-wrap:wrap; gap:10px}
+.form-opt-btn{
+  background: #232527;
+  border: 2px solid var(--rbx-gold);
+  border-radius: 12px;
+  padding: 10px 16px;
+  color: #FFF;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #121314;
+  transition: all 0.08s ease;
+}
+.form-opt-btn:hover{ background: var(--rbx-gold); color: #000; }
+.form-opt-btn:active{ transform: translateY(2px); box-shadow: 0 2px 0 #121314; }
+.form-opt-btn em{
+  font-style: normal;
+  font-size: 12px;
+  opacity: 0.85;
+  margin-left: 6px;
+  font-family: var(--font-tc);
+  font-weight: 500;
+}
 
 /* 回饋面板 */
 .feedback-card{
@@ -307,8 +295,10 @@ h1 span{color:var(--rbx-blue)}
 .review-list{display:flex; flex-direction:column; gap:10px; margin-top:20px; text-align:left}
 .review-item{background:var(--rbx-card-top); border:2px solid var(--rbx-border); border-left:6px solid var(--rbx-green); border-radius:12px; padding:12px 16px}
 .review-item.no{border-left-color:var(--rbx-red)}
-.review-item .w-title{font-size:18px; font-weight:800; color:var(--rbx-blue)}
-.review-item .w-meaning{font-size:14px; color:#EEE; margin-top:4px; font-family:var(--font-tc)}
+.review-item .sent-show{font-size:17px; font-weight:700; color:#FFF; line-height:1.6}
+.review-item .sent-show u{text-decoration:none; color:#00E676; font-weight:800; background:rgba(0,230,118,0.15); padding:1px 6px; border-radius:6px}
+.review-item.no .sent-show u{color:#FF5252; background:rgba(255,82,82,0.15)}
+.review-item .meta-show{font-size:13.5px; color:var(--muted); margin-top:6px; font-family:var(--font-tc)}
 
 /* ---------- Key Sheet Table ---------- */
 .key-table{width:100%; border-collapse:collapse; font-size:14.5px; font-family:var(--font-tc)}
@@ -316,8 +306,8 @@ h1 span{color:var(--rbx-blue)}
 .key-table td{border-bottom:1px solid rgba(255,255,255,0.06); padding:12px 8px; vertical-align:middle}
 .key-table td:first-child{font-family:var(--font-game); font-weight:800; color:var(--rbx-blue); width:32px}
 .key-table .w{font-weight:800; font-size:16.5px; color:#FFF; font-family:var(--font-game)}
-.key-table .p{color:var(--rbx-gold); font-size:13px; font-weight:700}
-.key-table .past{color:var(--rbx-green); font-size:13.5px; font-weight:700}
+.key-table .p{color:var(--rbx-purple); font-size:13.5px; font-weight:700}
+.key-table .forms-txt{color:var(--rbx-green); font-size:13.5px; font-weight:700}
 
 .btn-group{display:flex; gap:10px; flex-wrap:wrap; margin-top:24px}
 .btn-group .rbx-btn-green{flex:1; min-width:180px}
@@ -335,22 +325,22 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
     <div class="player-info">
       <div class="avatar" id="playerAvatar">🏆</div>
       <div class="rank-meta">
-        <div class="rank-title" id="playerRankTitle">STAGE 1 · 初級闖關者</div>
+        <div class="rank-title" id="playerRankTitle">STAGE 1 · 二年級冒險者</div>
         <div class="robux-val" id="robuxText">🪙 R$ 0 Robux 代幣</div>
       </div>
     </div>
     <div class="header-btns">
       <button class="rbx-btn rbx-btn-gray" id="btnSound">🔊 音效: 開</button>
-      <button class="rbx-btn rbx-btn-gray" id="btnKey">📖 單字清單</button>
+      <button class="rbx-btn rbx-btn-gray" id="btnKey">📖 單字與變形表</button>
     </div>
   </header>
 
   <!-- View 1: Setup / Home -->
   <section id="paneSetup" class="rbx-card pad">
     <div class="setup-hero">
-      <span class="hero-badge">GRADE 2 · OBBY QUEST</span>
-      <h1>單字大冒險 <span>ROBLOX OBBY</span></h1>
-      <p class="hero-desc">15 組核心單詞 · 雙向模式自由切換 · 挑戰全破 Checkpoint！</p>
+      <span class="hero-badge">GRADE 2 · SENTENCE OBBY</span>
+      <h1>單字大冒險 <span>SENTENCE QUEST</span></h1>
+      <p class="hero-desc">15 個課堂例句對應 · 點選單字並選出正確詞性與變形（過去式 / 複數）！</p>
     </div>
 
     <div class="stats-grid">
@@ -364,20 +354,8 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
       </div>
     </div>
 
-    <label class="mode-section-title">選擇本次闖關模式：</label>
-    <div class="modes-grid">
-      <div class="mode-card" data-mode="A" aria-pressed="true">
-        <b>模式 A：看意思選單字（預設）</b>
-        <span>題目顯示英文解釋，從 4 個單字中選出正確答案</span>
-      </div>
-      <div class="mode-card" data-mode="B" aria-pressed="false">
-        <b>模式 B：看單字選意思</b>
-        <span>題目顯示英文單字與詞性，從 4 個解釋中配對</span>
-      </div>
-    </div>
-
     <button class="rbx-btn rbx-btn-green" id="btnStartGame" style="width:100%; padding:16px; font-size:20px;">
-      ▶️ 開始闖關 OBBY！
+      ▶️ 開始例句闖關 OBBY！
     </button>
   </section>
 
@@ -393,16 +371,17 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
 
     <div class="rbx-card pad">
       <div class="question-box">
-        <div class="q-title-main" id="qTargetTitle">rescue</div>
-        <div class="q-subtags" id="qSubtags">
-          <span class="pos-tag" id="qPosTag">v.</span>
-          <span class="tense-tag" id="qTenseTag">過去式: rescued</span>
+        <div class="q-meta">
+          <span class="q-num" id="qNum">STAGE 1</span>
+          <span class="q-pos-badge" id="qPosBadge">v. 動詞</span>
         </div>
+        <p class="sentence-text" id="sentenceBox"></p>
       </div>
 
       <div id="interactionArea">
-        <div class="options-title" id="optionsPromptTitle">🎯 點選下方正確的單字（Word）：</div>
-        <div class="options-grid" id="optionsGrid"></div>
+        <div class="section-label">步驟 1：點選對應的目標單字</div>
+        <div class="word-bank" id="wordBank"></div>
+        <div id="formsArea"></div>
       </div>
 
       <div id="feedbackArea"></div>
@@ -431,12 +410,12 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
 
   <!-- View 4: Key Sheet -->
   <section id="paneKey" class="rbx-card pad hidden">
-    <h2 style="margin:0 0 6px;color:var(--rbx-blue);font-size:22px">📖 15 個核心單字全覽表</h2>
-    <p style="color:var(--muted);font-size:14px;margin:0 0 16px;font-family:var(--font-tc)">包含詞性標註、動詞過去式形態與完整英文釋義。</p>
+    <h2 style="margin:0 0 6px;color:var(--rbx-blue);font-size:22px">📖 15 個核心單字與變形表</h2>
+    <p style="color:var(--muted);font-size:14px;margin:0 0 16px;font-family:var(--font-tc)">單字詞性、動詞過去式與名詞複數形態一覽。</p>
 
     <div style="overflow-x:auto">
       <table class="key-table">
-        <thead><tr><th>#</th><th>單字 (Word)</th><th>詞性</th><th>過去式 (Past)</th><th>英文釋義 (Meaning)</th></tr></thead>
+        <thead><tr><th>#</th><th>單字 (Word)</th><th>詞性 (POS)</th><th>形態變形 (Forms)</th><th>課本例句 (Sentence)</th></tr></thead>
         <tbody id="keyTableBody"></tbody>
       </table>
     </div>
@@ -511,7 +490,7 @@ function launchConfetti() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   const pieces = [];
-  const colors = ['#00A2FF', '#00E676', '#FFC400', '#FF3B30', '#E040FB'];
+  const colors = ['#00A2FF', '#00E676', '#FFC400', '#FF3B30', '#B388FF'];
   for (let i = 0; i < 75; i++) {
     pieces.push({
       x: canvas.width / 2, y: canvas.height / 2,
@@ -538,33 +517,169 @@ function launchConfetti() {
   update();
 }
 
-/* ---------- 15 組單字資料庫 ---------- */
-const VOCAB = [
-  { w: "prickle", pos: "n.", past: null, meaning: "one of several thin, sharp points that stick out of a plant or an animal" },
-  { w: "secret", pos: "n.", past: null, meaning: "something that only a few people know" },
-  { w: "exactly", pos: "adv.", past: null, meaning: "used for saying that something is completely true" },
-  { w: "prickly", pos: "adj.", past: null, meaning: "covered with prickles" },
-  { w: "rescue", pos: "v.", past: "rescued", meaning: "to help someone or something out of a dangerous, harmful, or unpleasant situation" },
-  { w: "tie", pos: "v.", past: "tied", meaning: "to fasten together two ends of a piece of string" },
-  { w: "knot", pos: "n.", past: null, meaning: "a joint made by tying together the ends of a piece or pieces of string, rope, cloth, etc." },
-  { w: "tight", pos: "adj.", past: null, meaning: "something that is held or kept together firmly or closely" },
-  { w: "grab", pos: "v.", past: "grabbed", meaning: "to take hold of something or someone suddenly and roughly" },
-  { w: "gasp", pos: "v.", past: "gasped", meaning: "to take a short, quick breath through the mouth, especially because of surprise, pain, or shock" },
-  { w: "shade of", pos: "phr.", past: null, meaning: "a particular type of pink, red, blue etc." },
-  { w: "hobble", pos: "v.", past: "hobbled", meaning: "to walk in an awkward way, usually because the feet or legs are injured" },
-  { w: "bandage", pos: "v.", past: "bandaged", meaning: "If you bandage a wound or part of someone's body, you tie a bandage around it" },
-  { w: "bouquet", pos: "n.", past: null, meaning: "a bunch of flowers" },
-  { w: "pleased", pos: "adj.", past: null, meaning: "happy or satisfied" }
+/* ---------- 圖片提取 15 組單字資料庫（例句 + 詞性與變形） ---------- */
+const VOCAB_DATA = [
+  {
+    w: "prickle",
+    pos: "n.",
+    sentence: "The fruit can be eaten once the ___ have been removed.",
+    answer: "prickles",
+    forms: [
+      { f: "prickle", tag: "單數名詞" },
+      { f: "prickles", tag: "複數名詞" }
+    ]
+  },
+  {
+    w: "secret",
+    pos: "n.",
+    sentence: "Mandy only told her ___ to me.",
+    answer: "secret",
+    forms: [
+      { f: "secret", tag: "單數名詞" },
+      { f: "secrets", tag: "複數名詞" }
+    ]
+  },
+  {
+    w: "exactly",
+    pos: "adv.",
+    sentence: "“So you gave her your iPad?” “Not ___, I lent it to her.”",
+    answer: "exactly",
+    forms: [
+      { f: "exactly", tag: "副詞 (adv.)" }
+    ]
+  },
+  {
+    w: "prickly",
+    pos: "adj.",
+    sentence: "The hedgehog curled up like a ___ ball.",
+    answer: "prickly",
+    forms: [
+      { f: "prickly", tag: "形容詞 (adj.)" }
+    ]
+  },
+  {
+    w: "rescue",
+    pos: "v.",
+    sentence: "We watched the boy ___ the cat from the tree.",
+    answer: "rescue",
+    forms: [
+      { f: "rescue", tag: "原形動詞" },
+      { f: "rescues", tag: "第三人稱單數" },
+      { f: "rescued", tag: "過去式 (ed)" }
+    ]
+  },
+  {
+    w: "tie",
+    pos: "v.",
+    sentence: "I ___ my hair back when it's hot.",
+    answer: "tie",
+    forms: [
+      { f: "tie", tag: "原形動詞" },
+      { f: "ties", tag: "第三人稱單數" },
+      { f: "tied", tag: "過去式 (ed)" }
+    ]
+  },
+  {
+    w: "knot",
+    pos: "n.",
+    sentence: "I showed Tom how to tie some ___.",
+    answer: "knots",
+    forms: [
+      { f: "knot", tag: "單數名詞" },
+      { f: "knots", tag: "複數名詞" }
+    ]
+  },
+  {
+    w: "tight",
+    pos: "adj.",
+    sentence: "Check that windows and doors are shut ___ before you leave.",
+    answer: "tight",
+    forms: [
+      { f: "tight", tag: "形容詞 (adj.)" }
+    ]
+  },
+  {
+    w: "grab",
+    pos: "v.",
+    sentence: "Stop ___ my arm. You're hurting me.",
+    answer: "grabbing",
+    forms: [
+      { f: "grab", tag: "原形動詞" },
+      { f: "grabbed", tag: "過去式 (ed)" },
+      { f: "grabbing", tag: "-ing 進行式" }
+    ]
+  },
+  {
+    w: "gasp",
+    pos: "v.",
+    sentence: "When she saw the money hidden in the box, she ___ in surprise.",
+    answer: "gasped",
+    forms: [
+      { f: "gasp", tag: "原形動詞" },
+      { f: "gasps", tag: "第三人稱單數" },
+      { f: "gasped", tag: "過去式 (ed)" }
+    ]
+  },
+  {
+    w: "shade of",
+    pos: "phr.",
+    sentence: "Paint some ___ green on the bottom of the drawing.",
+    answer: "shade of",
+    forms: [
+      { f: "shade of", tag: "片語 (phr.)" }
+    ]
+  },
+  {
+    w: "hobble",
+    pos: "v.",
+    sentence: "The last time I saw Tina she was ___ around with a stick.",
+    answer: "hobbling",
+    forms: [
+      { f: "hobble", tag: "原形動詞" },
+      { f: "hobbled", tag: "過去式 (ed)" },
+      { f: "hobbling", tag: "-ing 進行式" }
+    ]
+  },
+  {
+    w: "bandage",
+    pos: "v.",
+    sentence: "Tom's leg got hurt, so the nurse ___ his leg up.",
+    answer: "bandaged",
+    forms: [
+      { f: "bandage", tag: "原形動詞" },
+      { f: "bandages", tag: "第三人稱單數" },
+      { f: "bandaged", tag: "過去式 (ed)" }
+    ]
+  },
+  {
+    w: "bouquet",
+    pos: "n.",
+    sentence: "Chris sent me a lovely ___ when I was sick.",
+    answer: "bouquet",
+    forms: [
+      { f: "bouquet", tag: "單數名詞" },
+      { f: "bouquets", tag: "複數名詞" }
+    ]
+  },
+  {
+    w: "pleased",
+    pos: "adj.",
+    sentence: "I'm ___ to hear you're feeling better.",
+    answer: "pleased",
+    forms: [
+      { f: "pleased", tag: "形容詞 (adj.)" }
+    ]
+  }
 ];
 
 /* ---------- 遊戲狀態 ---------- */
 const $ = s => document.querySelector(s);
 const el = (t,c,h) => { const n=document.createElement(t); if(c)n.className=c; if(h!=null)n.innerHTML=h; return n; };
 const shuffle = a => { const x=a.slice(); for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];} return x; };
+const esc = s => s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
 
-let currentMode = "A"; // "A": 看意思選單字 (預設), "B": 看單字選意思
 let totalQ = 15, quizData = [], qIdx = 0, currentScore = 0, combo = 0, maxCombo = 0;
-let answeredTotal = 0, isLocked = false, quizLog = [];
+let answeredTotal = 0, isLocked = false, pickedWordIndex = null, quizLog = [];
 
 const panes = ['#paneSetup', '#paneQuiz', '#paneResult', '#paneKey'];
 function switchPane(id) {
@@ -574,7 +689,7 @@ function switchPane(id) {
 
 function startObby() {
   sfx.click();
-  quizData = shuffle(VOCAB.map((item, idx) => ({ ...item, originalIdx: idx })));
+  quizData = shuffle(VOCAB_DATA.map((item, idx) => ({ ...item, originalIdx: idx })));
   qIdx = 0; currentScore = 0; combo = 0; maxCombo = 0; quizLog = [];
   switchPane('#paneQuiz');
   renderQuestion();
@@ -582,6 +697,7 @@ function startObby() {
 
 function renderQuestion() {
   isLocked = false;
+  pickedWordIndex = null;
   const current = quizData[qIdx];
 
   $('#hudProgress').textContent = 'STAGE ' + (qIdx + 1) + ' / ' + totalQ;
@@ -596,73 +712,70 @@ function renderQuestion() {
     comboEl.style.display = 'none';
   }
 
-  const titleEl = $('#qTargetTitle');
-  const posTag = $('#qPosTag');
-  const tenseTag = $('#qTenseTag');
-  const promptEl = $('#optionsPromptTitle');
-
-  if (currentMode === "A") {
-    // 模式 A：題目是意思 (Meaning) -> 答案是單字 (Word)
-    titleEl.textContent = '“ ' + current.meaning + ' ”';
-    titleEl.className = 'q-title-main mode-a-text';
-    
-    posTag.textContent = '詞性: ' + current.pos;
-    if (current.past) {
-      tenseTag.style.display = 'inline-block';
-      tenseTag.textContent = '含過去式形態';
-    } else {
-      tenseTag.style.display = 'none';
-    }
-    promptEl.textContent = '🎯 根據上述意思，點選正確的單字（Word）：';
-  } else {
-    // 模式 B：題目是單字 (Word) -> 答案是意思 (Meaning)
-    titleEl.textContent = current.w;
-    titleEl.className = 'q-title-main';
-    
-    posTag.textContent = current.pos;
-    if (current.past) {
-      tenseTag.style.display = 'inline-block';
-      tenseTag.textContent = '過去式: ' + current.past;
-    } else {
-      tenseTag.style.display = 'none';
-    }
-    promptEl.textContent = '🎯 點選下方正確的意思（Definition）：';
-  }
+  $('#qNum').textContent = 'STAGE ' + (qIdx + 1);
+  $('#qPosBadge').textContent = '目標詞性: ' + current.pos;
+  $('#sentenceBox').innerHTML = esc(current.sentence).replace('___', '<span class="blank-slot" id="targetSlot">?</span>');
 
   $('#interactionArea').classList.remove('hidden');
+  $('#formsArea').innerHTML = '';
   $('#feedbackArea').innerHTML = '';
 
-  // 產生 4 個選項
-  const distractorPool = VOCAB.filter(v => v.w !== current.w);
-  const pickedDistractors = shuffle(distractorPool).slice(0, 3);
-  const options = shuffle([current, ...pickedDistractors]);
+  renderWordBank();
+}
 
-  const grid = $('#optionsGrid');
-  grid.innerHTML = '';
-
-  options.forEach(opt => {
-    let btn;
-    if (currentMode === "A") {
-      let labelHtml = opt.w;
-      if (opt.past) labelHtml += ' <em>(過去式: ' + opt.past + ')</em>';
-      btn = el('button', 'opt-btn word-opt', labelHtml);
-    } else {
-      btn = el('button', 'opt-btn', opt.meaning);
-    }
+function renderWordBank() {
+  const bank = $('#wordBank');
+  bank.innerHTML = '';
+  VOCAB_DATA.forEach((item, idx) => {
+    const btn = el('button', 'word-btn', item.w);
     btn.type = 'button';
-    btn.addEventListener('click', () => handleSelect(opt, btn));
-    grid.appendChild(btn);
+    btn.addEventListener('click', () => onWordSelect(idx, btn));
+    bank.appendChild(btn);
   });
 }
 
-function handleSelect(chosenOpt, clickedBtn) {
+function onWordSelect(chosenVocabIdx, btn) {
+  if (isLocked) return;
+  sfx.click();
+  document.querySelectorAll('.word-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  pickedWordIndex = chosenVocabIdx;
+
+  const chosenVocab = VOCAB_DATA[chosenVocabIdx];
+
+  // 若該單詞只有一種形態（如形容詞、副詞、片語），直接提交答案
+  if (chosenVocab.forms.length === 1) {
+    submitAnswer(chosenVocab.forms[0].f, chosenVocabIdx);
+    return;
+  }
+
+  // 若有多種形態（動詞時態、名詞單複數），展開變形選擇面板
+  const formsArea = $('#formsArea');
+  formsArea.innerHTML = '';
+  
+  const panel = el('div', 'forms-panel');
+  panel.appendChild(el('div', 'forms-header', '步驟 2：選擇「<b>' + chosenVocab.w + '</b> (' + chosenVocab.pos + ')」的正確形態填入句子：'));
+  
+  const grid = el('div', 'forms-grid');
+  chosenVocab.forms.forEach(formObj => {
+    const formBtn = el('button', 'form-opt-btn', formObj.f + ' <em>(' + formObj.tag + ')</em>');
+    formBtn.type = 'button';
+    formBtn.addEventListener('click', () => submitAnswer(formObj.f, chosenVocabIdx));
+    grid.appendChild(formBtn);
+  });
+
+  panel.appendChild(grid);
+  formsArea.appendChild(panel);
+}
+
+function submitAnswer(ansText, chosenVocabIdx) {
   if (isLocked) return;
   isLocked = true;
   answeredTotal++;
   $('#statAnswered').textContent = answeredTotal;
 
   const current = quizData[qIdx];
-  const isCorrect = chosenOpt.w === current.w;
+  const isCorrect = ansText.toLowerCase() === current.answer.toLowerCase();
 
   if (isCorrect) {
     combo++;
@@ -671,34 +784,36 @@ function handleSelect(chosenOpt, clickedBtn) {
     const earned = 100 + (combo - 1) * 20;
     currentScore += earned;
     sfx.correct();
-    clickedBtn.classList.add('correct');
   } else {
     combo = 0;
     sfx.oof();
-    clickedBtn.classList.add('wrong');
-    // 高亮正確答案
-    document.querySelectorAll('.opt-btn').forEach(b => {
-      if (currentMode === "A") {
-        if (b.textContent.includes(current.w)) b.classList.add('correct');
-      } else {
-        if (b.textContent === current.meaning) b.classList.add('correct');
-      }
-    });
   }
 
   $('#robuxText').textContent = '🪙 R$ ' + currentScore + ' Robux 代幣';
   $('#hudScore').textContent = '🪙 R$ ' + currentScore;
   $('#hudBar').style.width = ((qIdx + 1) / totalQ * 100) + '%';
-  quizLog.push({ item: current, isCorrect: isCorrect, chosen: chosenOpt });
+  quizLog.push({ item: current, isCorrect: isCorrect, given: ansText, chosenVocabIdx: chosenVocabIdx });
+
+  // 更新空缺處
+  const slot = $('#targetSlot');
+  slot.textContent = ansText;
+  slot.className = 'blank-slot ' + (isCorrect ? 'good' : 'bad');
+
+  $('#interactionArea').classList.add('hidden');
 
   // 即時回饋面板
   const fb = el('div', 'feedback-card' + (isCorrect ? '' : ' wrong'));
   fb.appendChild(el('div', 'fb-title', isCorrect ? '🎉 CHECKPOINT REACHED!' : '💥 OOF! 掉下關卡了！'));
+
+  const tagObj = current.forms.find(f => f.f.toLowerCase() === current.answer.toLowerCase());
+  const tagStr = tagObj ? '（' + tagObj.tag + '）' : '';
   
-  let subText = '單字：<b>' + current.w + '</b> (' + current.pos + ')';
-  if (current.past) subText += ' · 過去式：<b>' + current.past + '</b>';
-  fb.appendChild(el('p', 'fb-sub', subText));
-  fb.appendChild(el('p', 'fb-meaning', '英文釋義：' + current.meaning));
+  let note = '目標單字：<b>' + current.w + '</b> (' + current.pos + ') · 本句正解填入：<b>' + current.answer + '</b> ' + tagStr;
+  if (!isCorrect && chosenVocabIdx !== current.originalIdx) {
+    const wrongPicked = VOCAB_DATA[chosenVocabIdx];
+    note += '<br>⚠️ 你的選擇是：<b>' + wrongPicked.w + '</b> (' + wrongPicked.pos + ')';
+  }
+  fb.appendChild(el('p', 'fb-meaning', note));
 
   // 按鈕列
   const row = el('div', 'next-row');
@@ -740,21 +855,24 @@ function showResults() {
   $('#gainScore').textContent = '+' + currentScore + ' Robux';
   $('#gainCombo').textContent = '最高連擊: ' + maxCombo + 'x';
 
-  const modeLabel = currentMode === "A" ? "模式 A (看意思選單字)" : "模式 B (看單字選意思)";
-  const remark = pct === 100 ? '👑 OBBY 完美全破！你已經完全掌握這 15 個單字！'
+  const remark = pct === 100 ? '👑 OBBY 完美全破！你已經完全掌握這 15 個單字與句中形態變形！'
                : pct >= 80 ? '🌟 闖關技術太強了！只差一點點就滿分！'
-               : pct >= 60 ? '👍 順利通關！多留意動詞過去式與單字意思。'
+               : pct >= 60 ? '👍 順利通關！多留意動詞過去式與名詞單複數形態。'
                : '💪 掉進岩漿不要灰心！先複習清單再重新出發！';
-  $('#finalRemark').textContent = '[' + modeLabel + '] 過關率 ' + pct + '% (' + correctCount + '/' + totalQ + ') · ' + remark;
+  $('#finalRemark').textContent = '過關率 ' + pct + '% (' + correctCount + '/' + totalQ + ') · ' + remark;
 
   const list = $('#reviewList');
   list.innerHTML = '';
   quizLog.forEach((entry, idx) => {
     const div = el('div', 'review-item' + (entry.isCorrect ? '' : ' no'));
-    let titleStr = (idx + 1) + '. ' + entry.item.w + ' (' + entry.item.pos + ')';
-    if (entry.item.past) titleStr += ' [過去式: ' + entry.item.past + ']';
-    div.appendChild(el('div', 'w-title', titleStr));
-    div.appendChild(el('div', 'w-meaning', '釋義：' + entry.item.meaning));
+    const fullSentenceHtml = (idx + 1) + '. ' + esc(entry.item.sentence).replace('___', '<u>' + entry.item.answer + '</u>');
+    div.appendChild(el('div', 'sent-show', fullSentenceHtml));
+    
+    let metaTxt = '單字：' + entry.item.w + ' (' + entry.item.pos + ')';
+    if (!entry.isCorrect) {
+      metaTxt += ' · 你的作答：<s>' + entry.given + '</s>';
+    }
+    div.appendChild(el('div', 'meta-show', metaTxt));
     list.appendChild(div);
   });
 
@@ -764,27 +882,18 @@ function showResults() {
 function renderKeyTable() {
   const tb = $('#keyTableBody');
   if (tb.children.length > 0) return;
-  VOCAB.forEach((item, idx) => {
+  VOCAB_DATA.forEach((item, idx) => {
     const tr = el('tr');
     tr.appendChild(el('td', null, String(idx + 1)));
     tr.appendChild(el('td', null, '<div class="w">' + item.w + '</div>'));
     tr.appendChild(el('td', 'p', item.pos));
-    tr.appendChild(el('td', 'past', item.past ? item.past : '-'));
-    tr.appendChild(el('td', null, item.meaning));
+    tr.appendChild(el('td', 'forms-txt', item.forms.map(f => f.f + ' (' + f.tag + ')').join('、 ')));
+    tr.appendChild(el('td', null, item.sentence.replace('___', '<b>' + item.answer + '</b>')));
     tb.appendChild(tr);
   });
 }
 
-/* ---------- 模式切換與按鈕事件 ---------- */
-document.querySelectorAll('.mode-card').forEach(card => {
-  card.addEventListener('click', () => {
-    sfx.click();
-    document.querySelectorAll('.mode-card').forEach(c => c.setAttribute('aria-pressed', 'false'));
-    card.setAttribute('aria-pressed', 'true');
-    currentMode = card.dataset.mode;
-  });
-});
-
+/* ---------- 按鈕事件綁定 ---------- */
 $('#btnStartGame').addEventListener('click', startObby);
 $('#btnPlayAgain').addEventListener('click', startObby);
 $('#btnBackHome').addEventListener('click', () => switchPane('#paneSetup'));
