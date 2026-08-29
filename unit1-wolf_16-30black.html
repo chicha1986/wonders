@@ -3,274 +3,218 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MINECRAFT 單字大冒險 · Word Quest (Daylight Edition)</title>
+<title>單字大冒險 · Word Quest RPG</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Fredoka:wght@600;700&family=Noto+Sans+TC:wght@500;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Fredoka:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&family=Nunito:wght@400;600;700;800;900&display=swap">
 <style>
 :root{
-  /* Minecraft 白天明亮主題色調 */
-  --mc-sky:#72A8FF;
-  --mc-sky-light:#C4DCFF;
-  --mc-grass:#5B9E2D;
-  --mc-grass-light:#7EC93B;
-  --mc-dirt:#866043;
-  --mc-wood:#B8860B;
-  
-  /* 經典 MC 淺灰 GUI 視窗面板 */
-  --mc-gui-bg:#C6C6C6;
-  --mc-gui-light:#FFFFFF;
-  --mc-gui-dark:#555555;
-  --mc-gui-border:#000000;
-  --mc-slot-bg:#8B8B8B;
-
-  /* 文字與重點顏色 */
-  --mc-text-dark:#1E1E1E;
-  --mc-text-shadow:#FFFFFF;
-  --mc-diamond:#00A8A8;
-  --mc-emerald:#1E8827;
-  --mc-gold:#D48800;
-  --mc-redstone:#D92525;
-  --mc-exp-green:#2BB20C;
-
-  --font-pixel:"Chakra Petch", "Fredoka", monospace, sans-serif;
-  --font-main:"Noto Sans TC", sans-serif;
+  --bg-dark:#0B132B; --bg-card:#1C2541; --bg-card-light:#283655;
+  --ink:#FFFFFF; --muted:#8D99AE; --line:#3A506B;
+  --accent:#00F0FF; --accent-glow:rgba(0,240,255,0.4);
+  --gold:#FFD166; --gold-glow:rgba(255,209,102,0.45);
+  --fire:#FF5A36; --fire-glow:rgba(255,90,54,0.5);
+  --good:#06D6A0; --good-soft:rgba(6,214,160,0.15);
+  --wrong:#EF476F; --wrong-soft:rgba(239,71,111,0.2);
+  --purple:#A06CD5;
+  --r:20px;
+  --display:"Chakra Petch","Fredoka",sans-serif;
+  --body:"Nunito","Noto Sans TC",sans-serif;
+  --han:"Noto Sans TC",sans-serif;
 }
-
 *{box-sizing:border-box}
 body{
-  margin:0; color:var(--mc-text-dark);
-  background-color: var(--mc-sky);
-  background-image: 
-    linear-gradient(180deg, #5C94FC 0%, #A4C6FF 65%, #62A435 65%, #4C8226 100%),
-    radial-gradient(circle at 85% 15%, #FFF6A0 0%, rgba(255,246,160,0) 25%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  font-family:var(--font-main); font-size:16px; line-height:1.6;
+  margin:0; color:var(--ink);
+  background-color:var(--bg-dark);
+  background-image:
+    radial-gradient(800px 500px at 5% 0%, #1D2D50 0%, rgba(11,19,43,0) 70%),
+    radial-gradient(700px 450px at 95% 10%, #201335 0%, rgba(11,19,43,0) 70%),
+    radial-gradient(600px 400px at 50% 100%, #132743 0%, rgba(11,19,43,0) 80%);
+  background-repeat:no-repeat; background-attachment:fixed;
+  font-family:var(--body); font-size:16.5px; line-height:1.6;
   user-select:none;
 }
+.wrap{max-width:880px; margin:0 auto; padding:18px 18px 80px;}
+button{font-family:inherit; font-size:inherit; cursor:pointer; border:none; outline:none}
 
-.wrap{max-width:880px; margin:0 auto; padding:20px 16px 80px;}
-
-/* ---------- Minecraft 經典 3D 浮雕 GUI 面板 ---------- */
-.mc-box {
-  background: var(--mc-gui-bg);
-  border: 4px solid var(--mc-gui-border);
-  box-shadow: 
-    inset 4px 4px 0px var(--mc-gui-light),
-    inset -4px -4px 0px var(--mc-gui-dark),
-    0 8px 16px rgba(0,0,0,0.25);
-}
-
-/* 經典灰色像素按鈕 */
-.mc-btn {
-  font-family: var(--font-pixel);
-  font-weight: 700;
-  cursor: pointer;
-  background: #B4B4B4;
-  color: #222;
-  border: 3px solid #000;
-  box-shadow: inset 3px 3px 0px #FFF, inset -3px -3px 0px #666, 0 4px 0 #333;
-  padding: 10px 16px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: transform 0.05s, box-shadow 0.05s;
-}
-.mc-btn:hover {
-  background: #C8C8C8;
-  box-shadow: inset 3px 3px 0px #FFF, inset -3px -3px 0px #777, 0 4px 0 #333;
-}
-.mc-btn:active {
-  transform: translateY(3px);
-  box-shadow: inset 3px 3px 0px #555, inset -3px -3px 0px #FFF, 0 1px 0 #333;
-}
-
-/* 鑽石綠寶石大按鈕 */
-.mc-btn-diamond {
-  background: #3DC5C8;
-  color: #033C3D;
-  box-shadow: inset 3px 3px 0px #A3FFFF, inset -3px -3px 0px #1F7375, 0 5px 0 #0D3E40;
-  font-size: 18px;
-  letter-spacing: 0.5px;
-}
-.mc-btn-diamond:hover { background: #4AE0E3; }
-
-/* 警示/重置按鈕 */
-.mc-btn-danger {
-  background: #E57373;
-  color: #5C0000;
-  box-shadow: inset 3px 3px 0px #FFCDD2, inset -3px -3px 0px #B71C1C, 0 4px 0 #333;
-  font-size: 15px;
-}
-.mc-btn-danger:hover { background: #EF9A9A; }
-
-/* ---------- 頂部玩家狀態欄 ---------- */
+/* ---------- Global Player Status Header ---------- */
 .status-bar{
-  background: rgba(198, 198, 198, 0.95);
-  border: 4px solid #000;
-  box-shadow: inset 3px 3px 0px #FFF, inset -3px -3px 0px #555, 0 6px 12px rgba(0,0,0,0.15);
-  padding: 12px 18px; margin-bottom: 20px;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  background:rgba(28,37,65,0.85); backdrop-filter:blur(10px);
+  border:2px solid var(--line); border-radius:20px;
+  padding:12px 18px; margin-bottom:20px;
+  display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.3);
 }
 .player-info{display:flex; align-items:center; gap:12px}
 .avatar{
-  width:48px; height:48px; background: #62A435;
-  border: 3px solid #000; box-shadow: inset 2px 2px 0 #A2E070;
-  display:flex; align-items:center; justify-content:center; font-size:26px;
+  width:46px; height:46px; border-radius:14px; background:linear-gradient(135deg,var(--purple),var(--accent));
+  display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 0 15px var(--accent-glow);
 }
 .rank-meta{display:flex; flex-direction:column}
-.rank-title{font-family:var(--font-pixel); font-size:16px; font-weight:700; color:#1C5216;}
-
-.exp-bar-wrap{
-  width:160px; height:12px; background:#4A4A4A; border:2px solid #000; position:relative; margin-top:4px;
-}
-.exp-bar{height:100%; width:0%; background:var(--mc-exp-green); box-shadow: inset 0 2px 0 #89FF6E;}
-.exp-text{font-size:11.5px; color:#1C5216; font-family:var(--font-pixel); font-weight:700; margin-top:2px}
+.rank-title{font-family:var(--display); font-size:16px; font-weight:700; color:var(--gold); display:flex; align-items:center; gap:6px}
+.exp-bar-wrap{width:140px; height:9px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; margin-top:4px}
+.exp-bar{height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--good)); transition:width .4s ease}
+.exp-text{font-size:11px; color:var(--muted); font-family:var(--display); margin-top:2px}
 
 .header-btns{display:flex; align-items:center; gap:8px}
+.icon-btn{
+  background:var(--bg-card-light); border:2px solid var(--line); color:var(--ink);
+  border-radius:12px; padding:7px 13px; font-family:var(--han); font-size:13.5px; font-weight:700;
+  display:flex; align-items:center; gap:6px; transition:all .15s;
+}
+.icon-btn:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px); box-shadow:0 4px 12px var(--accent-glow)}
 
-/* ---------- Setup Hero ---------- */
+/* ---------- Card & UI Base ---------- */
+.card{background:var(--bg-card); border:2px solid var(--line); border-radius:var(--r); box-shadow:0 10px 30px rgba(0,0,0,0.35)}
 .pad{padding:24px}
+
+/* ---------- Setup Pane ---------- */
 .setup-hero{text-align:center; padding:10px 0 20px}
 .hero-badge{
-  display:inline-block; font-family:var(--font-pixel); font-size:13px; font-weight:700;
-  color:#7A4B00; background:#FFF1BF; border:2px solid #D48800;
-  padding:4px 14px; margin-bottom:12px;
+  display:inline-block; font-family:var(--display); font-size:12px; font-weight:700;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--accent); background:rgba(0,240,255,0.1);
+  border:1px solid var(--accent); border-radius:99px; padding:3px 14px; margin-bottom:10px;
 }
-h1{font-family:var(--font-pixel); font-size:clamp(28px,6vw,42px); font-weight:700; margin:0; line-height:1.2; color:#222;}
-h1 span{color:#2B8C12; text-shadow: 2px 2px 0px #C7FFAF;}
-.hero-desc{color:#444; font-size:15.5px; margin-top:8px; font-weight:500;}
+h1{font-family:var(--display); font-size:clamp(32px,6vw,44px); font-weight:700; margin:0; line-height:1.2; letter-spacing:.02em}
+h1 span{color:var(--accent); text-shadow:0 0 15px var(--accent-glow)}
+.hero-desc{font-family:var(--han); color:var(--muted); font-size:15px; margin-top:6px}
 
 .stats-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0}
 @media(max-width:600px){.stats-grid{grid-template-columns:1fr}}
-.stat-box{
-  background:#DCDCDC; border:3px solid #000; box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #888;
-  padding:12px; text-align:center;
-}
-.stat-box .val{font-family:var(--font-pixel); font-size:26px; font-weight:700; color:#B06000;}
-.stat-box .lbl{font-size:13px; color:#555; margin-top:2px; font-weight:700;}
+.stat-box{background:rgba(255,255,255,0.03); border:1.5px solid var(--line); border-radius:16px; padding:14px; text-align:center}
+.stat-box .val{font-family:var(--display); font-size:26px; font-weight:700; color:var(--gold)}
+.stat-box .lbl{font-size:12.5px; color:var(--muted); font-family:var(--han); margin-top:2px}
 
-.modes-label{font-family:var(--font-pixel); font-weight:700; font-size:15px; color:#0F5B60; margin-bottom:10px; display:block;}
+.modes-label{font-family:var(--han); font-weight:700; font-size:14.5px; color:var(--accent); margin-bottom:10px; display:block}
 .modes{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:24px}
 @media(max-width:520px){.modes{grid-template-columns:1fr}}
 .mode-card{
-  background:#D4D4D4; border:3px solid #000; box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #777;
-  padding:16px; color:#222; text-align:left; cursor:pointer;
+  background:var(--bg-card-light); border:2.5px solid var(--line); border-radius:16px;
+  padding:16px; color:var(--ink); text-align:left; transition:all .2s; position:relative;
 }
-.mode-card[aria-pressed="true"]{
-  border-color:#000; background:#BAE3E5; box-shadow:inset 3px 3px 0 #FFF, inset -3px -3px 0 #2A8C8E;
-}
-.mode-card b{font-family:var(--font-pixel); font-size:22px; color:#095C60; display:block;}
-.mode-card span{font-size:13px; color:#555; display:block; margin-top:4px}
+.mode-card:hover{transform:translateY(-3px); border-color:var(--accent)}
+.mode-card[aria-pressed="true"]{border-color:var(--accent); background:rgba(0,240,255,0.08); box-shadow:0 0 20px var(--accent-glow)}
+.mode-card b{font-family:var(--display); font-size:28px; font-weight:700; color:var(--accent)}
+.mode-card span{display:block; font-size:13px; color:var(--muted); font-family:var(--han); margin-top:3px}
 
-/* ---------- Quiz HUD ---------- */
+.go-btn{
+  width:100%; background:linear-gradient(135deg,#00C0FF,#0072FF); border:none; border-radius:16px;
+  padding:16px 24px; font-family:var(--display); font-weight:700; font-size:20px; letter-spacing:.05em;
+  color:#FFFFFF; box-shadow:0 6px 0 #004B99, 0 10px 25px var(--accent-glow); transition:all .12s; text-transform:uppercase;
+}
+.go-btn:hover{transform:translateY(-2px); box-shadow:0 8px 0 #004B99, 0 14px 30px var(--accent-glow)}
+.go-btn:active{transform:translateY(3px); box-shadow:0 3px 0 #004B99}
+
+/* ---------- Quiz HUD & Arena ---------- */
 .hud{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px}
-.q-progress{font-family:var(--font-pixel); font-size:16px; font-weight:700; color:#0A3B5C;}
-.progress-track{flex:1; height:16px; background:#4A4A4A; border:2px solid #000; position:relative}
-.progress-fill{height:100%; width:0%; background:var(--mc-exp-green); transition:width .3s ease;}
-.score-badge{font-family:var(--font-pixel); font-size:18px; font-weight:700; color:#8C4B00;}
+.q-progress{font-family:var(--display); font-size:15px; font-weight:700; color:var(--muted)}
+.progress-track{flex:1; height:12px; background:rgba(255,255,255,0.08); border-radius:99px; overflow:hidden; border:1px solid var(--line)}
+.progress-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--accent),var(--good)); border-radius:99px; transition:width .35s ease}
+.score-badge{font-family:var(--display); font-size:18px; font-weight:700; color:var(--gold); display:flex; align-items:center; gap:4px}
 
 .combo-box{
   display:none; align-items:center; justify-content:center; gap:6px;
-  font-family:var(--font-pixel); font-size:24px; font-weight:700; color:var(--mc-redstone);
-  text-shadow:1px 1px #FFF; margin-bottom:12px; animation:critPulse .4s infinite alternate;
+  font-family:var(--display); font-size:22px; font-weight:700; color:var(--fire);
+  text-shadow:0 0 15px var(--fire-glow); margin-bottom:12px; animation:comboPulse .5s infinite alternate;
 }
-@keyframes critPulse{from{transform:scale(1)} to{transform:scale(1.08)}}
+@keyframes comboPulse{from{transform:scale(1)} to{transform:scale(1.08)}}
 
-.question-box{
-  background:#EAEAEA; border:3px solid #000;
-  box-shadow:inset 3px 3px 0 #FFF, inset -3px -3px 0 #999;
-  padding:20px; margin-bottom:18px;
-}
+.question-box{background:rgba(255,255,255,0.02); border:2px solid var(--line); border-radius:18px; padding:22px; margin-bottom:18px}
 .q-meta{display:flex; align-items:center; gap:8px; margin-bottom:10px}
-.q-num{font-family:var(--font-pixel); font-weight:700; font-size:16px; color:#006A6B;}
-.pos-tag{font-family:var(--font-pixel); font-size:12px; font-weight:700; color:#7A4B00; background:#FFE8A3; border:1px solid #C48200; padding:1px 8px;}
-.sentence{font-size:clamp(18px,3.8vw,23px); line-height:1.75; font-weight:700; margin:0; color:#111;}
+.q-num{font-family:var(--display); font-weight:700; font-size:15px; color:var(--accent)}
+.pos-tag{font-family:var(--display); font-size:11.5px; font-weight:700; color:var(--purple); background:rgba(160,108,213,0.15); border:1px solid var(--purple); padding:2px 10px; border-radius:99px}
+.sentence{font-size:clamp(19px,3.8vw,24px); line-height:1.75; font-weight:700; margin:0; letter-spacing:.02em}
 
 .blank{
-  display:inline-block; min-width:120px; text-align:center; background:#FFF5D1;
-  border:2px dashed #C48200; color:#9E5700; font-weight:800; padding:1px 10px; margin:0 4px;
+  display:inline-block; min-width:130px; text-align:center; background:rgba(255,209,102,0.1);
+  border:2.5px dashed var(--gold); border-radius:12px; color:var(--gold); font-weight:800; padding:1px 12px; margin:0 4px;
 }
-.blank.good{background:#D5F5CE; border:2px solid var(--mc-emerald); color:#0F5B14;}
-.blank.bad{background:#FCDDDD; border:2px solid var(--mc-redstone); color:#991B1B; animation:shake .3s ease-in-out}
+.blank.good{background:var(--good-soft); border:2.5px solid var(--good); color:var(--good); text-shadow:0 0 10px rgba(6,214,160,0.5)}
+.blank.bad{background:var(--wrong-soft); border:2.5px solid var(--wrong); color:var(--wrong); text-shadow:0 0 10px rgba(239,71,111,0.5); animation:shake .3s ease-in-out}
 @keyframes shake{0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-6px)} 40%,80%{transform:translateX(6px)}}
 
-.bank-header{font-family:var(--font-pixel); font-size:15px; font-weight:700; color:#005E60; margin:18px 0 10px;}
-.word-bank{display:flex; flex-wrap:wrap; gap:8px}
+.bank-header{font-family:var(--han); font-size:13px; font-weight:700; color:var(--muted); margin:20px 0 10px; display:flex; align-items:center; gap:8px}
+.bank-header::after{content:""; flex:1; height:1px; background:var(--line)}
+.word-bank{display:flex; flex-wrap:wrap; gap:9px}
 .word-btn{
-  background:#DBDBDB; border:3px solid #000; box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #888, 0 3px 0 #555;
-  padding:8px 14px; color:#111; font-weight:700; font-size:16px; cursor:pointer; font-family:var(--font-main);
+  background:var(--bg-card-light); border:2px solid var(--line); border-radius:14px;
+  padding:10px 18px; color:var(--ink); font-weight:800; font-size:16.5px;
+  box-shadow:0 4px 0 rgba(0,0,0,0.3); transition:all .12s;
 }
-.word-btn:hover{background:#EFEFEF;}
-.word-btn.selected{background:#3DC5C8; color:#023E40; box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #156C6E, 0 3px 0 #000;}
+.word-btn:hover{border-color:var(--accent); background:rgba(0,240,255,0.12); transform:translateY(-2px); box-shadow:0 6px 12px var(--accent-glow)}
+.word-btn.selected{border-color:var(--accent); background:var(--accent); color:var(--bg-dark); box-shadow:0 0 15px var(--accent-glow)}
 
 .forms-panel{
-  margin-top:16px; background:#D7F0F0; border:3px solid #00888B;
-  padding:16px; box-shadow:inset 2px 2px 0 #FFF;
+  margin-top:16px; background:rgba(255,209,102,0.06); border:2.5px dashed var(--gold);
+  border-radius:16px; padding:16px; animation:fadeIn .25s ease;
 }
-.forms-title{margin:0 0 10px; font-family:var(--font-pixel); font-size:14.5px; color:#014E50; font-weight:700;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:translateY(0)}}
+.forms-title{margin:0 0 10px; font-family:var(--han); font-size:13.5px; color:var(--gold); font-weight:700}
 .forms-grid{display:flex; flex-wrap:wrap; gap:8px}
 .form-btn{
-  background:#E3F9E0; border:2px solid #238C1F; padding:8px 14px; font-weight:700; color:#0C4809; font-size:15px; cursor:pointer;
+  background:var(--bg-card); border:2px solid var(--gold); border-radius:12px;
+  padding:9px 15px; font-weight:800; color:var(--ink); font-size:15.5px; transition:all .12s;
 }
-.form-btn:hover{background:#238C1F; color:#FFF;}
-.form-btn em{font-style:normal; font-size:11.5px; opacity:.85; margin-left:6px; font-weight:normal}
+.form-btn:hover{background:var(--gold); color:var(--bg-dark); transform:translateY(-2px); box-shadow:0 4px 12px var(--gold-glow)}
+.form-btn em{font-style:normal; font-family:var(--han); font-size:11.5px; opacity:.75; margin-left:6px; font-weight:500}
 
 .feedback-card{
-  margin-top:18px; padding:16px; border:3px solid var(--mc-emerald); background:#DCF8D8;
+  margin-top:20px; border-radius:16px; padding:18px 20px; border:2.5px solid var(--good);
+  background:var(--good-soft); animation:fadeIn .3s ease;
 }
-.feedback-card.wrong{border-color:var(--mc-redstone); background:#FFE0E0}
-.fb-title{font-family:var(--font-pixel); font-size:20px; font-weight:700; margin:0 0 6px; color:#0E5E13;}
-.feedback-card.wrong .fb-title{color:#9E1818}
-.fb-zh{font-size:15px; margin:0 0 6px; color:#222}
-.fb-note{font-size:13.5px; color:#555; margin:0}
-.fb-note b{color:#000}
-
-/* 下方按鈕行：左側重開、右側下一題 */
-.next-row{
-  margin-top:16px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;
+.feedback-card.wrong{border-color:var(--wrong); background:var(--wrong-soft)}
+.fb-title{font-family:var(--display); font-size:22px; font-weight:700; margin:0 0 6px; color:var(--good); display:flex; align-items:center; gap:8px}
+.feedback-card.wrong .fb-title{color:var(--wrong)}
+.fb-zh{font-family:var(--han); font-size:15.5px; margin:0 0 8px; line-height:1.7}
+.fb-note{font-family:var(--han); font-size:13.5px; color:var(--muted); margin:0; line-height:1.6}
+.fb-note b{color:var(--ink)}
+.next-row{margin-top:18px; display:flex; justify-content:flex-end}
+.next-btn{
+  background:linear-gradient(135deg,var(--accent),#0072FF); color:#fff;
+  border-radius:14px; padding:12px 28px; font-family:var(--display); font-weight:700; font-size:17px;
+  box-shadow:0 4px 14px var(--accent-glow); transition:all .15s;
 }
+.next-btn:hover{transform:translateY(-2px); box-shadow:0 6px 20px var(--accent-glow)}
 
 /* ---------- Result View ---------- */
-.result-card{text-align:center; padding:32px 16px}
-.result-score{font-family:var(--font-pixel); font-size:clamp(56px,14vw,84px); font-weight:700; color:#B06000; line-height:1}
-.result-score small{font-size:.35em; color:#666}
-.result-remark{font-size:16px; margin:12px 0 20px; font-weight:700; color:#222;}
-.gains-row{display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:24px}
-.gain-pill{background:#E0E0E0; border:2px solid #888; padding:8px 14px; font-family:var(--font-pixel); font-weight:700; font-size:15px; color:#006768;}
+.result-card{text-align:center; padding:36px 20px}
+.result-score{font-family:var(--display); font-size:clamp(60px,16vw,96px); font-weight:700; color:var(--gold); text-shadow:0 0 25px var(--gold-glow); line-height:1}
+.result-score small{font-size:.35em; color:var(--muted)}
+.result-remark{font-family:var(--han); font-size:16.5px; color:var(--ink); margin:12px 0 20px}
+.gains-row{display:flex; justify-content:center; gap:16px; flex-wrap:wrap; margin-bottom:24px}
+.gain-pill{background:rgba(255,255,255,0.05); border:1.5px solid var(--line); border-radius:12px; padding:8px 16px; font-family:var(--display); font-weight:700; font-size:15px; color:var(--accent)}
 
-.review-list{display:flex; flex-direction:column; gap:10px; margin-top:20px; text-align:left}
-.review-item{background:#E8E8E8; border:2px solid #000; border-left:6px solid var(--mc-emerald); padding:12px 16px}
-.review-item.no{border-left-color:var(--mc-redstone)}
-.review-item .sent{font-size:16px; font-weight:700; color:#111;}
-.review-item .sent u{text-decoration:none; color:#0B5810; font-weight:800; background:#C7F0C3; padding:1px 6px;}
-.review-item.no .sent u{color:#9C1414; background:#FFCFCF}
-.review-item .trans{font-size:13px; color:#555; margin-top:4px}
+.review-list{display:flex; flex-direction:column; gap:10px; margin-top:24px; text-align:left}
+.review-item{background:var(--bg-card-light); border:1.5px solid var(--line); border-left:6px solid var(--good); border-radius:14px; padding:14px 18px}
+.review-item.no{border-left-color:var(--wrong)}
+.review-item .sent{font-size:16px; font-weight:700; line-height:1.7}
+.review-item .sent u{text-decoration:none; color:var(--good); font-weight:800; background:rgba(6,214,160,0.15); padding:1px 6px; border-radius:6px}
+.review-item.no .sent u{color:var(--wrong); background:rgba(239,71,111,0.15)}
+.review-item .trans{font-family:var(--han); font-size:13px; color:var(--muted); margin-top:6px}
 
-/* ---------- Badges Showcase ---------- */
-.badge-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; margin-top:16px}
+/* ---------- Badges Showcase Modal / Pane ---------- */
+.badge-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:14px; margin-top:16px}
 .badge-card{
-  background:#D0D0D0; border:3px solid #888; padding:14px; display:flex; align-items:center; gap:12px; opacity:.4; filter:grayscale(1);
+  background:rgba(255,255,255,0.02); border:2px solid var(--line); border-radius:16px;
+  padding:16px; display:flex; align-items:center; gap:14px; opacity:.4; filter:grayscale(1); transition:all .2s;
 }
-.badge-card.unlocked{opacity:1; filter:none; border-color:#000; background:#FFF1C9; box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #C29623;}
-.badge-icon{font-size:32px}
+.badge-card.unlocked{opacity:1; filter:none; border-color:var(--gold); background:rgba(255,209,102,0.05); box-shadow:0 0 15px var(--gold-glow)}
+.badge-icon{font-size:36px}
 .badge-meta{display:flex; flex-direction:column}
-.badge-name{font-family:var(--font-pixel); font-size:16px; font-weight:700; color:#8C4B00;}
-.badge-desc{font-size:12px; color:#555; margin-top:2px}
+.badge-name{font-family:var(--display); font-size:16px; font-weight:700; color:var(--gold)}
+.badge-desc{font-size:12px; color:var(--muted); font-family:var(--han); margin-top:2px}
 
 /* ---------- Key Sheet Table ---------- */
-.key-table{width:100%; border-collapse:collapse; font-size:14px}
-.key-table th{text-align:left; font-size:12px; color:#555; border-bottom:3px solid #000; padding:8px; font-family:var(--font-pixel)}
-.key-table td{border-bottom:1px solid #AAA; padding:10px 8px; vertical-align:top}
-.key-table td:first-child{font-family:var(--font-pixel); font-weight:700; color:#007A7C}
-.key-table .w{font-weight:800; font-size:16px; color:#111}
-.key-table .zh{color:#555; font-size:13px}
-.key-table .forms{color:#0D6612; font-size:13px; font-weight:700;}
+.key-table{width:100%; border-collapse:collapse; font-size:14.5px}
+.key-table th{font-family:var(--han); text-align:left; font-size:12px; color:var(--muted); border-bottom:2px solid var(--line); padding:10px; text-transform:uppercase}
+.key-table td{border-bottom:1px solid rgba(255,255,255,0.06); padding:12px 10px; vertical-align:top}
+.key-table td:first-child{font-family:var(--display); font-weight:700; color:var(--accent); width:32px}
+.key-table .w{font-weight:800; font-size:16px; color:var(--ink)}
+.key-table .zh{font-family:var(--han); color:var(--muted); font-size:13px}
+.key-table .forms{color:var(--good); font-size:13px}
 
-.btn-group{display:flex; gap:10px; flex-wrap:wrap; margin-top:20px}
-.btn-group .mc-btn-diamond{flex:1; min-width:180px}
+.btn-group{display:flex; gap:10px; flex-wrap:wrap; margin-top:24px}
+.btn-group .go-btn{flex:1; min-width:180px}
 .hidden{display:none!important}
 canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:999}
 </style>
@@ -280,39 +224,39 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
 <canvas id="confetti"></canvas>
 
 <div class="wrap">
-  <!-- Top MC Daylight Player Bar -->
+  <!-- Top Global Player Status Bar -->
   <header class="status-bar">
     <div class="player-info">
-      <div class="avatar" id="playerAvatar">🗡️</div>
+      <div class="avatar" id="playerAvatar">🥉</div>
       <div class="rank-meta">
-        <div class="rank-title" id="playerRankTitle">Lv.1 木劍冒險家</div>
+        <div class="rank-title" id="playerRankTitle">Lv.1 見習冒險家</div>
         <div class="exp-bar-wrap"><div class="exp-bar" id="expBar"></div></div>
         <div class="exp-text" id="expText">0 / 300 EXP</div>
       </div>
     </div>
     <div class="header-btns">
-      <button class="mc-btn" id="btnSound">🔊 音效: 開</button>
-      <button class="mc-btn" id="btnBadgeHall">🏆 成就館</button>
-      <button class="mc-btn" id="btnKey">📖 合成表</button>
+      <button class="icon-btn" id="btnSound">🔊 音效: 開</button>
+      <button class="icon-btn" id="btnBadgeHall">🏅 成就勳章</button>
+      <button class="icon-btn" id="btnKey">📖 單字全表</button>
     </div>
   </header>
 
   <!-- View 1: Setup / Home -->
-  <section id="paneSetup" class="mc-box pad">
+  <section id="paneSetup" class="card pad">
     <div class="setup-hero">
-      <span class="hero-badge">☀️ Grade 5 · Daylight Quest</span>
+      <span class="hero-badge">Grade 5 · Vocabulary Quest</span>
       <h1>單字大冒險 <span>WORD QUEST</span></h1>
-      <p class="hero-desc">15 種核心戰利品單字 · 150 場晴空原野挑戰 · 連擊暴擊爽快升級！</p>
+      <p class="hero-desc">15 個核心單詞 · 150 句全新冒險情境 · 挑戰連擊極限！</p>
     </div>
 
     <div class="stats-grid">
       <div class="stat-box">
         <div class="val" id="statAnswered">0</div>
-        <div class="lbl">累計挖掘題數</div>
+        <div class="lbl">累計作答題數</div>
       </div>
       <div class="stat-box">
         <div class="val" id="statMaxCombo">0x</div>
-        <div class="lbl">最高暴擊 Combo</div>
+        <div class="lbl">歷史最高 Combo</div>
       </div>
       <div class="stat-box">
         <div class="val" id="statBadges">0 / 5</div>
@@ -320,19 +264,19 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
       </div>
     </div>
 
-    <label class="modes-label">選擇本次冒險規模：</label>
+    <label class="modes-label">選擇這次的挑戰規模：</label>
     <div class="modes">
-      <div class="mode-card" data-n="15" aria-pressed="true">
-        <b>15 題 陽光衝刺</b>
-        <span>15 個單字各出一題，快速通關</span>
-      </div>
-      <div class="mode-card" data-n="30" aria-pressed="false">
-        <b>30 題 曠野長征</b>
-        <span>15 個單字各出兩題，雙倍 EXP 獎勵</span>
-      </div>
+      <button class="mode-card" data-n="15" aria-pressed="true">
+        <b>15 題 衝刺賽</b>
+        <span>15 個單字各出一題，快速過關</span>
+      </button>
+      <button class="mode-card" data-n="30" aria-pressed="false">
+        <b>30 題 大冒險</b>
+        <span>15 個單字各出兩題，賺取雙倍 EXP</span>
+      </button>
     </div>
 
-    <button class="mc-btn mc-btn-diamond" id="btnStartGame" style="width:100%; padding:16px;">⚔️ 開始原野闖關！</button>
+    <button class="go-btn" id="btnStartGame">⚔️ 開始闖關！</button>
   </section>
 
   <!-- View 2: Quiz Arena -->
@@ -343,9 +287,9 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
       <span class="score-badge" id="hudScore">⭐ 0</span>
     </div>
 
-    <div class="combo-box" id="comboAlert">💥 2x CRITICAL COMBO!</div>
+    <div class="combo-box" id="comboAlert">🔥 2x COMBO!</div>
 
-    <div class="mc-box pad">
+    <div class="card pad">
       <div class="question-box">
         <div class="q-meta">
           <span class="q-num" id="qNum">Q1</span>
@@ -355,7 +299,7 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
       </div>
 
       <div id="interactionArea">
-        <div class="bank-header">📦 點選背包裡的單字方塊：</div>
+        <div class="bank-header">點選正確的單字庫：</div>
         <div class="word-bank" id="wordBank"></div>
         <div id="formsArea"></div>
       </div>
@@ -365,9 +309,9 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
   </section>
 
   <!-- View 3: Result Summary -->
-  <section id="paneResult" class="mc-box pad hidden">
+  <section id="paneResult" class="card pad hidden">
     <div class="result-card">
-      <div class="result-score" id="finalScore">0<small> PTS</small></div>
+      <div class="result-score" id="finalScore">0<small> 分</small></div>
       <p class="result-remark" id="finalRemark"></p>
       
       <div class="gains-row">
@@ -378,28 +322,28 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
       <div class="review-list" id="reviewList"></div>
 
       <div class="btn-group">
-        <button class="mc-btn mc-btn-diamond" id="btnPlayAgain">🔄 再探險一次</button>
-        <button class="mc-btn" id="btnBackHome">🏠 返回重生點</button>
+        <button class="go-btn" id="btnPlayAgain">🔄 再玩一次</button>
+        <button class="icon-btn" id="btnBackHome">🏠 返回大廳</button>
       </div>
     </div>
   </section>
 
   <!-- View 4: Badges Showcase -->
-  <section id="paneBadges" class="mc-box pad hidden">
-    <h2 style="font-family:var(--font-pixel);margin:0 0 6px;color:#8C4B00;">🏆 冒險者成就館</h2>
-    <p style="color:#555;font-size:14px;margin:0 0 16px;">達成冒險挑戰以解鎖專屬成就並獲取大量 EXP 獎勵！</p>
+  <section id="paneBadges" class="card pad hidden">
+    <h2 style="font-family:var(--display);margin:0 0 6px;color:var(--gold)">🏅 冒險者成就勳章館</h2>
+    <p style="color:var(--muted);font-size:14px;margin:0 0 16px;font-family:var(--han)">達成各項作答條件即可解鎖勳章並獲得大量 EXP 獎勵！</p>
     
     <div class="badge-grid" id="badgeGrid"></div>
 
     <div class="btn-group">
-      <button class="mc-btn mc-btn-diamond" id="btnBackFromBadges">返回主頁</button>
+      <button class="go-btn" id="btnBackFromBadges">返回主頁</button>
     </div>
   </section>
 
   <!-- View 5: Key Sheet -->
-  <section id="paneKey" class="mc-box pad hidden">
-    <h2 style="font-family:var(--font-pixel);margin:0 0 6px;color:#006A6B;">📖 單字合成表（全覽）</h2>
-    <p style="color:#555;font-size:14px;margin:0 0 16px;">複習這 15 個單字的基本義與時態、形態合成公式。</p>
+  <section id="paneKey" class="card pad hidden">
+    <h2 style="font-family:var(--display);margin:0 0 6px;color:var(--accent)">📖 單字與形態全覽表</h2>
+    <p style="color:var(--muted);font-size:14px;margin:0 0 16px;font-family:var(--han)">複習這 15 個單字的基本義與動詞時態、名詞複數變化。</p>
 
     <div style="overflow-x:auto">
       <table class="key-table">
@@ -409,14 +353,14 @@ canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointe
     </div>
 
     <div class="btn-group">
-      <button class="mc-btn mc-btn-diamond" id="btnRestartFromKey">🚀 立即重新挑戰</button>
-      <button class="mc-btn" id="btnBackFromKey">返回主頁</button>
+      <button class="go-btn" id="btnRestartFromKey">🚀 全部重新挑戰</button>
+      <button class="icon-btn" id="btnBackFromKey">返回主頁</button>
     </div>
   </section>
 </div>
 
 <script>
-/* ---------- 8-Bit 像素音效 ---------- */
+/* ---------- Sound Synthesis (Web Audio API) ---------- */
 class SoundEngine {
   constructor() {
     this.ctx = null;
@@ -444,60 +388,66 @@ class SoundEngine {
     osc.start(this.ctx.currentTime + delay);
     osc.stop(this.ctx.currentTime + delay + duration);
   }
-  click() { this.init(); this.playTone(440, 'square', 0.05); }
+  click() { this.init(); this.playTone(600, 'sine', 0.08); }
   correct(combo = 1) {
     this.init();
-    const baseFreq = 587.33;
+    const baseFreq = 523.25; // C5
     const step = Math.min(combo, 8);
-    this.playTone(baseFreq * Math.pow(1.08, step), 'square', 0.1, 0);
-    this.playTone(baseFreq * Math.pow(1.08, step + 4), 'square', 0.18, 0.06);
+    this.playTone(baseFreq * Math.pow(1.06, step), 'triangle', 0.15, 0);
+    this.playTone(baseFreq * Math.pow(1.06, step + 4), 'triangle', 0.25, 0.08);
   }
   wrong() {
     this.init();
-    this.playTone(180, 'sawtooth', 0.15, 0);
-    this.playTone(130, 'sawtooth', 0.2, 0.08);
+    this.playTone(180, 'sawtooth', 0.18, 0);
+    this.playTone(140, 'sawtooth', 0.25, 0.1);
   }
   levelUp() {
     this.init();
-    const notes = [330, 392, 659, 523, 587, 784];
-    notes.forEach((f, idx) => this.playTone(f, 'square', 0.14, idx * 0.07));
+    const notes = [440, 554.37, 659.25, 880];
+    notes.forEach((f, idx) => this.playTone(f, 'triangle', 0.2, idx * 0.09));
   }
 }
 const sfx = new SoundEngine();
 
-/* ---------- 像素彩帶效果 ---------- */
+/* ---------- Confetti Cannon ---------- */
 function launchConfetti() {
   const canvas = document.getElementById('confetti');
   const ctx = canvas.getContext('2d');
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   const pieces = [];
-  const colors = ['#00CCCC', '#FFBB00', '#33CC33', '#FF3333', '#9900CC'];
-  for (let i = 0; i < 80; i++) {
+  const colors = ['#00F0FF', '#FFD166', '#FF5A36', '#06D6A0', '#A06CD5'];
+  for (let i = 0; i < 90; i++) {
     pieces.push({
-      x: canvas.width / 2, y: canvas.height / 2,
+      x: canvas.width / 2, y: canvas.height / 2 + 50,
       vx: (Math.random() - 0.5) * 16,
-      vy: (Math.random() - 0.7) * 16,
-      size: Math.floor(Math.random() * 8 + 6),
-      color: colors[Math.floor(Math.random() * colors.length)]
+      vy: (Math.random() - 0.7) * 18,
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rot: Math.random() * 360,
+      vRot: (Math.random() - 0.5) * 10
     });
   }
   let frame = 0;
   function update() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     pieces.forEach(p => {
-      p.x += p.vx; p.y += p.vy; p.vy += 0.5;
+      p.x += p.vx; p.y += p.vy; p.vy += 0.45; p.rot += p.vRot;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate((p.rot * Math.PI) / 180);
       ctx.fillStyle = p.color;
-      ctx.fillRect(p.x, p.y, p.size, p.size);
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+      ctx.restore();
     });
     frame++;
-    if (frame < 100) requestAnimationFrame(update);
+    if (frame < 120) requestAnimationFrame(update);
     else ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
   update();
 }
 
-/* ---------- 題庫資料 ---------- */
+/* ---------- Vocabulary Database ---------- */
 const WORDS = [
  {w:"racket", pos:"n.", zh:"吵鬧聲、喧嘩聲", forms:[{f:"racket",t:"單數"},{f:"rackets",t:"複數"}]},
  {w:"interrupt", pos:"v.", zh:"打斷、打擾（說話或行動）", forms:[{f:"interrupt",t:"原形"},{f:"interrupts",t:"三單"},{f:"interrupted",t:"過去式"},{f:"interrupting",t:"-ing"}]},
@@ -517,7 +467,7 @@ const WORDS = [
 ];
 
 const QS = [
-/* 0 racket */
+/* 0 racket (n.) */
 [
  {s:"The puppies were making such a loud ___ in the living room.", a:"racket", zh:"小狗們在客廳裡製造了極大的吵鬧聲。"},
  {s:"Please stop that ___! The baby is trying to sleep.", a:"racket", zh:"請停止那陣吵鬧聲！小寶寶正試著睡覺。"},
@@ -530,7 +480,7 @@ const QS = [
  {s:"I could not hear the phone call because of the terrible ___.", a:"racket", zh:"因為那可怕的噪音吵鬧聲，我聽不見電話聲音。"},
  {s:"The sudden ___ in the hallway surprised all of us.", a:"racket", zh:"走廊上突然傳來的喧嘩吵鬧聲讓我們所有人都嚇了一跳。"}
 ],
-/* 1 interrupt */
+/* 1 interrupt (v.) */
 [
  {s:"It is not polite to ___ others while they are speaking.", a:"interrupt", zh:"在別人說話時打斷是不禮貌的。"},
  {s:"He always ___ our teacher with funny questions.", a:"interrupts", zh:"他總是會用好笑的問題打斷老師說話。"},
@@ -543,7 +493,7 @@ const QS = [
  {s:"He never ___ when his parents are giving advice.", a:"interrupts", zh:"當父母給建議時，他從不插話打斷。"},
  {s:"The sudden rainstorm ___ our soccer game on the field.", a:"interrupted", zh:"突然的暴雨打斷了我們在球場上的足球賽。"}
 ],
-/* 2 improve */
+/* 2 improve (v.) */
 [
  {s:"If you practice reading every day, your English will ___.", a:"improve", zh:"如果你每天練習閱讀，你的英文就會進步。"},
  {s:"She ___ her swimming speed after joining the swim club.", a:"improved", zh:"加入游泳社後，她的游泳速度進步了。"},
@@ -556,7 +506,7 @@ const QS = [
  {s:"Drinking enough water helps to ___ your skin health.", a:"improve", zh:"喝足夠的水有助於改善你的皮膚健康。"},
  {s:"The coach said that our defense is steadily ___.", a:"improving", zh:"教練說我們的防守正在穩定進步中。"}
 ],
-/* 3 remark */
+/* 3 remark (v.) */
 [
  {s:"“The stars are very bright tonight,” my grandfather ___.", a:"remarked", zh:"「今晚的星星真明亮。」我爺爺說道。"},
  {s:"She often ___ on how fast her little brother is growing.", a:"remarks", zh:"她常評論起自己的弟弟長得有多快。"},
@@ -569,7 +519,7 @@ const QS = [
  {s:"He listened carefully and ___ only when necessary.", a:"remarked", zh:"他仔細聆聽，只在必要時才發表談話。"},
  {s:"The principal ___ on the importance of reading books.", a:"remarked", zh:"校長談到了閱讀書籍的重要性。"}
 ],
-/* 4 tuck */
+/* 4 tuck (v.) */
 [
  {s:"Please ___ your shirt into your pants before going on stage.", a:"tuck", zh:"上台前請把襯衫塞進褲子裡。"},
  {s:"Mom gently ___ the blanket around the sleeping baby.", a:"tucked", zh:"媽媽溫柔地將被子塞好包覆在熟睡的寶寶身旁。"},
@@ -582,7 +532,7 @@ const QS = [
  {s:"He was caught ___ sweet snacks into his schoolbag.", a:"tucking", zh:"他被抓到正偷偷把甜食點心塞進書包裡。"},
  {s:"The little girl ___ the doll under her arm and ran.", a:"tucked", zh:"小女孩把洋娃娃夾塞在手臂下跑開了。"}
 ],
-/* 5 slink away */
+/* 5 slink away (phr.v.) */
 [
  {s:"The scared cat ___ into the shadows when the dog barked.", a:"slunk away", zh:"當狗吠叫時，那隻受驚的貓偷偷溜進了陰影中。"},
  {s:"After breaking the vase, the guilty boy tried to ___.", a:"slink away", zh:"打破花瓶後，那名內疚的男孩試圖偷偷溜走。"},
@@ -595,7 +545,7 @@ const QS = [
  {s:"She noticed a suspicious man ___ behind the corner.", a:"slinking away", zh:"她注意到一個可疑男子正悄悄溜到轉角後面。"},
  {s:"The wolf ___ when it realized the camp had a fire.", a:"slunk away", zh:"那隻狼發現營地有火後就偷偷溜走了。"}
 ],
-/* 6 give up */
+/* 6 give up (phr.v.) */
 [
  {s:"Even when the test was hard, she refused to ___.", a:"give up", zh:"即使考試很難，她也拒絕放棄。"},
  {s:"He never ___ easily when learning a new instrument.", a:"gives up", zh:"在學習新樂器時，他從不輕易放棄。"},
@@ -608,7 +558,7 @@ const QS = [
  {s:"She is not the type of girl who ___ when things get tough.", a:"gives up", zh:"她不是那種遇到困難時就會放棄的女孩。"},
  {s:"___ on your dreams is something you will regret later.", a:"Giving up", zh:"放棄自己的夢想是以後會後悔的事。"}
 ],
-/* 7 splendid */
+/* 7 splendid (adj.) */
 [
  {s:"The palace garden was full of ___ colorful flowers.", a:"splendid", zh:"皇宮花園裡開滿了極美且色彩繽紛的花朵。"},
  {s:"We had a ___ time during our family trip to the mountains.", a:"splendid", zh:"我們在家庭山區旅行中度過了一段極好的美好時光。"},
@@ -621,7 +571,7 @@ const QS = [
  {s:"The museum displayed many ___ ancient treasures.", a:"splendid", zh:"這座博物館展出了許多精美絕倫的古代珍寶。"},
  {s:"The chef served a ___ dinner for all the guests.", a:"splendid", zh:"主廚為所有賓客送上了極為豐盛美味的晚餐。"}
 ],
-/* 8 admire */
+/* 8 admire (v.) */
 [
  {s:"I really ___ my big brother for his courage and kindness.", a:"admire", zh:"我非常欽佩我哥哥的勇氣與善良。"},
  {s:"She ___ the bright paintings hanging on the art room wall.", a:"admired", zh:"她欣賞著掛在美術教室牆上色彩明亮的畫作。"},
@@ -634,7 +584,7 @@ const QS = [
  {s:"My father ___ people who work hard and stay honest.", a:"admires", zh:"我父親很欽佩勤奮且保持誠實的人。"},
  {s:"The whole audience ___ the pianist's wonderful talent.", a:"admired", zh:"全場觀眾都讚賞欽佩那位鋼琴家的精湛才華。"}
 ],
-/* 9 lie down */
+/* 9 lie down (phr.v.) */
 [
  {s:"If you feel dizzy, you should ___ on the sofa.", a:"lie down", zh:"如果你感到頭暈，你應該在沙發上躺下。"},
  {s:"The exhausted puppy ___ on the soft carpet and slept.", a:"lay down", zh:"筋疲力竭的小狗在柔軟的地毯上躺下睡著了。"},
@@ -645,9 +595,9 @@ const QS = [
  {s:"My cat ___ next to me whenever I read books.", a:"lies down", zh:"每當我看書時，我的貓就會在我身旁躺下。"},
  {s:"She ___ on the towel and enjoyed the warm sunshine.", a:"lay down", zh:"她躺在毛巾上，享受溫暖的陽光。"},
  {s:"Is your brother ___ in bed, or is he playing games?", a:"lying down", zh:"你哥哥是躺在床上休息，還是在玩遊戲？"},
- {s:"I was so sleepy that I ___ and closed my eyes盤上。", a:"lay down", zh:"我太睏了，以至於我一躺下就馬上閉上了眼睛。"}
+ {s:"I was so sleepy that I ___ and closed my eyes immediately.", a:"lay down", zh:"我太睏了，以至於我一躺下就馬上閉上了眼睛。"}
 ],
-/* 10 passion */
+/* 10 passion (n.) */
 [
  {s:"She speaks about protecting ocean animals with great ___.", a:"passion", zh:"她帶著極大的熱情談論著保護海洋動物。"},
  {s:"Music has been his biggest ___ since he was seven.", a:"passion", zh:"自從七歲起，音樂就是他最大的熱愛。"},
@@ -660,7 +610,7 @@ const QS = [
  {s:"Writing stories is one of my greatest ___.", a:"passions", zh:"寫故事是我最大的熱情愛好之一。"},
  {s:"The actor delivered his speech on stage with powerful ___.", a:"passion", zh:"那位演員在舞台上充滿強烈熱情地發表了演說。"}
 ],
-/* 11 genie */
+/* 11 genie (n.) */
 [
  {s:"The ___ in the story gave the boy three magical wishes.", a:"genie", zh:"故事中的精靈給了男孩三個魔法願望。"},
  {s:"If you rub the magic lamp, a powerful ___ might come out.", a:"genie", zh:"如果你摩擦神燈，強大的魔精可能會跑出來。"},
@@ -673,7 +623,7 @@ const QS = [
  {s:"In the cartoon, the funny ___ told many silly jokes.", a:"genie", zh:"在卡通裡，那位搞笑的精靈說了許多蠢笑話。"},
  {s:"A golden light shone brightly as the ___ appeared.", a:"genie", zh:"當精靈出現時，一道金光燦爛耀眼。"}
 ],
-/* 12 emerge */
+/* 12 emerge (v.) */
 [
  {s:"A little green frog ___ from under the wet rock.", a:"emerged", zh:"一隻小綠蛙從潮濕的岩石下浮現出來。"},
  {s:"The bright sun slowly ___ from behind the dark clouds.", a:"emerged", zh:"耀眼的太陽緩慢地從烏雲後面露臉浮現。"},
@@ -686,7 +636,7 @@ const QS = [
  {s:"The swimmer ___ from the deep water to take a breath.", a:"emerged", zh:"游泳選手從深水中浮出水面換氣。"},
  {s:"Stars start ___ one by one as the sky gets darker.", a:"emerging", zh:"隨著天空漸暗，星星開始一顆接著一顆顯現出來。"}
 ],
-/* 13 swashbuckling */
+/* 13 swashbuckling (adj.) */
 [
  {s:"The movie is about a ___ pirate searching for lost treasure.", a:"swashbuckling", zh:"這部電影是關於一個尋找失落寶藏、英勇冒險的海盜。"},
  {s:"My cousin loves to read ___ adventure stories about knights.", a:"swashbuckling", zh:"我表哥很喜歡閱讀關於騎士的英勇俠義冒險故事。"},
@@ -699,7 +649,7 @@ const QS = [
  {s:"We watched an exciting ___ film during the weekend.", a:"swashbuckling", zh:"我們在週末看了一部精彩刺激的英雄冒險電影。"},
  {s:"The legend describes a ___ traveler who defended the village.", a:"swashbuckling", zh:"傳說描述了一位保衛村莊的行俠仗義冒險遊俠。"}
 ],
-/* 14 stretch */
+/* 14 stretch (v.) */
 [
  {s:"It is important to ___ your muscles before running.", a:"stretch", zh:"跑步前伸展拉開肌肉是很重要的。"},
  {s:"The cat woke up, ___ its legs, and gave a big yawn.", a:"stretched", zh:"那隻貓醒了過來，伸展伸長雙腿並打了個大哈欠。"},
@@ -714,21 +664,21 @@ const QS = [
 ]
 ];
 
-/* ---------- 成就與等級設定 ---------- */
+/* ---------- Achievements & Profile Progression ---------- */
 const BADGES_DEF = [
- {id:"first_blood", icon:"🗡️", name:"怪物初討伐", desc:"完成任意一場原野冒險", exp:100},
- {id:"combo_master", icon:"⚡", name:"暴擊連擊王", desc:"單輪內達成 5x Critical Combo", exp:150},
- {id:"perfect_clear", icon:"💎", name:"鑽石全清圖", desc:"在 15 或 30 題挑戰中 100% 全對", exp:300},
- {id:"veteran_50", icon:"⛏️", name:"資深礦工", desc:"累計挖掘作答超過 50 題", exp:200},
- {id:"grand_master", icon:"👑", name:"終界龍征服者", desc:"角色升至 Lv.5 傳奇", exp:500}
+ {id:"first_blood", icon:"⚡", name:"首戰告捷", desc:"完成任意一輪闖關練習", exp:100},
+ {id:"combo_master", icon:"🔥", name:"連擊大師", desc:"單輪內達成 5x Combo 連擊", exp:150},
+ {id:"perfect_clear", icon:"🛡️", name:"無懈可擊", desc:"在 15 題或 30 題模式中獲得 100% 全對", exp:300},
+ {id:"veteran_50", icon:"📚", name:"熱血學霸", desc:"累計作答超過 50 題", exp:200},
+ {id:"grand_master", icon:"👑", name:"傳奇冒險王", desc:"個人等級升至 Lv.5", exp:500}
 ];
 
 const RANKS = [
- {lvl:1, name:"Lv.1 木劍冒險家", icon:"🗡️", expNeed:300},
- {lvl:2, name:"Lv.2 石鎬採集者", icon:"⛏️", expNeed:800},
- {lvl:3, name:"Lv.3 鐵甲狂戰士", icon:"🛡️", expNeed:1500},
- {lvl:4, name:"Lv.4 鑽石附魔師", icon:"💎", expNeed:2500},
- {lvl:5, name:"Lv.5 獄髓征服者", icon:"👑", expNeed:Infinity}
+ {lvl:1, name:"Lv.1 見習冒險家", icon:"🥉", expNeed:300},
+ {lvl:2, name:"Lv.2 荒野探索者", icon:"🥈", expNeed:800},
+ {lvl:3, name:"Lv.3 單字神射手", icon:"🥇", expNeed:1500},
+ {lvl:4, name:"Lv.4 語法魔導士", icon:"💎", expNeed:2500},
+ {lvl:5, name:"Lv.5 傳奇冒險王", icon:"👑", expNeed:Infinity}
 ];
 
 let player = {
@@ -740,14 +690,14 @@ let player = {
 
 function loadPlayer() {
  try {
-   const d = JSON.parse(localStorage.getItem('mc_daylight_quest_profile'));
+   const d = JSON.parse(localStorage.getItem('g5_quest_profile'));
    if (d) player = Object.assign(player, d);
  } catch(e){}
  updateProfileUI();
 }
 
 function savePlayer() {
- localStorage.setItem('mc_daylight_quest_profile', JSON.stringify(player));
+ localStorage.setItem('g5_quest_profile', JSON.stringify(player));
  updateProfileUI();
 }
 
@@ -821,7 +771,7 @@ function updateProfileUI() {
  document.getElementById('statBadges').textContent = Object.keys(player.badges).length + ' / ' + BADGES_DEF.length;
 }
 
-/* ---------- 遊戲互動與出題邏輯 ---------- */
+/* ---------- Game Session State ---------- */
 const $ = s => document.querySelector(s);
 const el = (t,c,h) => { const n=document.createElement(t); if(c)n.className=c; if(h!=null)n.innerHTML=h; return n; };
 const shuffle = a => { const x=a.slice(); for(let i=x.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[x[i],x[j]]=[x[j],x[i]];} return x; };
@@ -865,7 +815,7 @@ function renderNextQuestion() {
  const comboEl = $('#comboAlert');
  if (combo >= 2) {
    comboEl.style.display = 'flex';
-   comboEl.textContent = '💥 ' + combo + 'x CRITICAL COMBO!';
+   comboEl.textContent = '🔥 ' + combo + 'x COMBO!';
  } else {
    comboEl.style.display = 'none';
  }
@@ -907,10 +857,10 @@ function onWordSelect(i, btn) {
  const formsArea = $('#formsArea');
  formsArea.innerHTML = '';
  const panel = el('div','forms-panel');
- panel.appendChild(el('p','forms-title','🔨 選擇「' + w.w + '」的合成形態：'));
+ panel.appendChild(el('p','forms-title','選擇 <b>' + w.w + '</b> 的正確形態：'));
  const grid = el('div','forms-grid');
  w.forms.forEach(f => {
-   const b = el('button','form-btn', f.f + '<em>(' + f.t + ')</em>');
+   const b = el('button','form-btn', f.f + '<em>' + f.t + '</em>');
    b.type = 'button';
    b.addEventListener('click', () => submitAnswer(f.f, i));
    grid.appendChild(b);
@@ -938,7 +888,7 @@ function submitAnswer(ans, chosenWordIdx) {
    sfx.correct(combo);
  } else {
    combo = 0;
-   addExp(10);
+   addExp(10); // Encouragement EXP
    roundGainedExp += 10;
    sfx.wrong();
  }
@@ -956,28 +906,18 @@ function submitAnswer(ans, chosenWordIdx) {
 
  const tag = (w.forms.find(f => f.f.toLowerCase() === q.a.toLowerCase()) || {t:''}).t;
  const fb = el('div', 'feedback-card' + (isCorrect ? '' : ' wrong'));
- fb.appendChild(el('div','fb-title', isCorrect ? '⚔️ 命中要害！' + (combo >= 2 ? ' ('+combo+'x Combo!)' : '') : '💥 答案錯誤！正確解答：' + q.a));
+ fb.appendChild(el('div','fb-title', isCorrect ? '⚔️ 答對了！' + (combo >= 2 ? ' ('+combo+'x Combo!)' : '') : '💥 正確答案是：' + q.a));
  fb.appendChild(el('p','fb-zh', q.zh));
 
  let note = '<b>' + w.w + '</b>（' + w.pos + '）' + w.zh + ' · 本句使用 <b>' + q.a + '</b>（' + tag + '）';
  if (!isCorrect && chosenWordIdx != null && chosenWordIdx !== q.wi) {
    const cw = WORDS[chosenWordIdx];
-   note += '<br>⚠️ 你選擇了 <b>' + cw.w + '</b>（' + cw.pos + '）' + cw.zh;
+   note += '<br>⚠️ 你選了 <b>' + cw.w + '</b>（' + cw.pos + '）' + cw.zh;
  }
  fb.appendChild(el('p','fb-note', note));
 
- // 按鈕區域：加入「立即重新挑戰」按鈕
  const row = el('div','next-row');
- 
- const restartBtn = el('button', 'mc-btn mc-btn-danger', '🔄 立即重新挑戰');
- restartBtn.type = 'button';
- restartBtn.addEventListener('click', () => {
-   if (confirm('確定要放棄當前進度並立即重新挑戰嗎？')) {
-     startAdventure();
-   }
- });
-
- const nextBtn = el('button','mc-btn mc-btn-diamond', (qIdx+1 < totalQ) ? '下一關 ➔' : '結算戰利品 🏆');
+ const nextBtn = el('button','next-btn', (qIdx+1 < totalQ) ? '下一題 ➔' : '結算戰績 🏆');
  nextBtn.type = 'button';
  nextBtn.addEventListener('click', () => {
    sfx.click();
@@ -985,8 +925,6 @@ function submitAnswer(ans, chosenWordIdx) {
    if (qIdx < totalQ) renderNextQuestion();
    else showFinalResults();
  });
-
- row.appendChild(restartBtn);
  row.appendChild(nextBtn);
  fb.appendChild(row);
  $('#feedbackArea').appendChild(fb);
@@ -1007,11 +945,11 @@ function showFinalResults() {
  $('#gainExp').textContent = '+' + roundGainedExp + ' EXP';
  $('#gainCombo').textContent = '最高連擊: ' + sessionMaxCombo + 'x';
  
- const remark = pct === 100 ? '👑 完美全對！你已經徹底精通這 15 個單字！'
+ const remark = pct === 100 ? '👑 太狂了！100% 全對，你已經完全掌握這 15 個單字！'
               : pct >= 80 ? '🌟 表現非常優異！只差一點點就滿分了！'
-              : pct >= 60 ? '👍 順利通關！多留意動詞過去式與單複數細節。'
-              : '💪 繼續加油！先查閱下方合成表重新複習，再重新出發！';
- $('#finalRemark').textContent = '命中率 ' + pct + '% (' + correctCount + '/' + totalQ + ') · ' + remark;
+              : pct >= 60 ? '👍 很好的開始！多注意過去式與複數形態的細節。'
+              : '💪 繼續加油！先看下方詳細訂正或答案卷，再重新挑戰！';
+ $('#finalRemark').textContent = '答對率 ' + pct + '% (' + correctCount + '/' + totalQ + ') · ' + remark;
 
  const list = $('#reviewList');
  list.innerHTML = '';
@@ -1042,7 +980,7 @@ function renderBadgeHall() {
    const c = el('div', 'badge-card' + (unlocked ? ' unlocked' : ''));
    c.appendChild(el('div','badge-icon', b.icon));
    const meta = el('div','badge-meta');
-   meta.appendChild(el('div','badge-name', b.name + (unlocked ? ' (已獲得)' : '')));
+   meta.appendChild(el('div','badge-name', b.name + (unlocked ? ' (已解鎖)' : '')));
    meta.appendChild(el('div','badge-desc', b.desc + ' · 獎勵 +' + b.exp + ' EXP'));
    c.appendChild(meta);
    grid.appendChild(c);
@@ -1062,7 +1000,7 @@ function renderKeySheet() {
  });
 }
 
-/* ---------- 綁定按鈕事件 ---------- */
+/* ---------- Event Listeners ---------- */
 document.querySelectorAll('.mode-card').forEach(card => {
  card.addEventListener('click', () => {
    sfx.click();
@@ -1097,7 +1035,7 @@ $('#btnSound').addEventListener('click', () => {
  $('#btnSound').textContent = sfx.enabled ? '🔊 音效: 開' : '🔇 音效: 關';
 });
 
-// 初始化
+// Initialize
 loadPlayer();
 </script>
 </body>
