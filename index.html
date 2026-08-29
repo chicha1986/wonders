@@ -37,14 +37,38 @@ body{
 :focus-visible{outline:3px solid var(--amber); outline-offset:3px; border-radius:10px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
-.masthead{padding-bottom:18px; border-bottom:3px dotted var(--line); margin-bottom:12px}
+.masthead{padding-bottom:18px; border-bottom:3px dotted var(--line); margin-bottom:20px}
 .eyebrow{font-size:11.5px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--accent)}
 h1{font-family:var(--display); font-size:clamp(32px,6.5vw,50px); font-weight:600; margin:4px 0 0; line-height:1.2; text-wrap:balance}
 h1 b{font-weight:600; color:var(--accent)}
 .sub{font-family:var(--han); font-size:14.5px; color:var(--muted); margin-top:6px}
 
-.groupbar{display:flex; align-items:center; gap:10px; margin:32px 0 14px}
-.groupbar h2{font-family:var(--han); font-size:14px; font-weight:700; letter-spacing:.04em; color:var(--ink); margin:0; white-space:nowrap}
+/* 頁籤 Tab 樣式 */
+.tab-nav{
+  display:flex; gap:10px; overflow-x:auto; padding-bottom:6px; margin:24px 0 10px;
+  -webkit-overflow-scrolling:touch;
+}
+.tab-btn{
+  background:var(--surface); border:2.5px solid var(--line); color:var(--ink);
+  padding:9px 18px; border-radius:999px; font-family:var(--han); font-size:14.5px; font-weight:700;
+  cursor:pointer; display:flex; align-items:center; gap:8px; white-space:nowrap;
+  transition:all .18s ease; box-shadow:0 2px 0 rgba(27,42,74,.05);
+}
+.tab-btn:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+.tab-btn.active{
+  background:var(--accent); border-color:var(--accent); color:#fff;
+  box-shadow:0 4px 10px rgba(47,127,240,.35);
+}
+.tab-btn .tab-count{
+  font-size:12px; background:var(--accent-soft); color:var(--accent-ink);
+  padding:2px 8px; border-radius:999px; font-weight:800;
+}
+.tab-btn.active .tab-count{
+  background:#fff; color:var(--accent);
+}
+
+.groupbar{display:flex; align-items:center; gap:10px; margin:28px 0 14px}
+.groupbar h2{font-family:var(--han); font-size:15px; font-weight:700; letter-spacing:.04em; color:var(--ink); margin:0; white-space:nowrap}
 .groupbar::after{content:""; flex:1; height:3px; background:var(--line); border-radius:3px}
 .count{font-family:var(--body); font-size:12px; font-weight:800; color:#fff; background:var(--accent); border-radius:999px; padding:3px 11px; font-variant-numeric:tabular-nums}
 
@@ -60,7 +84,7 @@ h1 b{font-weight:600; color:var(--accent)}
 .item:nth-child(3n+3)::before{background:var(--purple)}
 .item:hover{transform:translateY(-4px); border-color:var(--accent)}
 .item .unit{font-family:var(--body); font-size:11px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); margin-top:4px}
-.item h3{font-family:var(--display); font-size:25px; font-weight:600; margin:0; line-height:1.25}
+.item h3{font-family:var(--display); font-size:24px; font-weight:600; margin:0; line-height:1.25}
 .item p{font-family:var(--han); font-size:13.5px; color:var(--muted); margin:0; line-height:1.75}
 .metas{display:flex; flex-wrap:wrap; gap:6px; margin-top:4px}
 .meta{font-family:var(--han); font-size:11.5px; font-weight:700; color:var(--accent-ink); background:var(--accent-soft); border-radius:8px; padding:4px 9px}
@@ -79,7 +103,7 @@ h1 b{font-weight:600; color:var(--accent)}
 .item.soon .unit,.item.soon h3{color:var(--muted)}
 .item.soon .open{background:var(--line); color:var(--muted); box-shadow:none}
 
-footer{margin-top:44px; padding-top:18px; border-top:3px dotted var(--line); font-family:var(--han); font-size:12.5px; color:var(--muted); line-height:1.9}
+footer{margin-top:48px; padding-top:18px; border-top:3px dotted var(--line); font-family:var(--han); font-size:12.5px; color:var(--muted); line-height:1.9}
 footer code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12px; background:var(--purple-soft); color:var(--purple); border-radius:6px; padding:1px 6px}
 </style>
 </head>
@@ -89,36 +113,42 @@ footer code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:1
     <div>
       <div class="eyebrow">Elementary English · Vocabulary Practice</div>
       <h1>英語<b>單字</b>評量站</h1>
-      <div class="sub">點下面的卡片就可以開始練習，每次題目順序都會重新隨機排列。</div>
+      <div class="sub">點選上方年級分頁切換，點擊卡片即可開始練習單字。</div>
     </div>
   </header>
 
+  <!-- 頁籤導覽列 -->
+  <nav class="tab-nav" id="tabNav" aria-label="年級選擇"></nav>
+
+  <!-- 卡片主呈現區 -->
   <main id="board"></main>
 
   <footer>
-    製作給國小五年級複習使用 · 手機、平板、電腦都可以直接開啟。<br>
-    要新增新的評量，只要把新的 <code>.html</code> 放進同一個資料夾，再到本檔案最下方的 <code>PAGES</code> 清單加一行就好。
+    國小英語自主複習平台 · 手機、平板、電腦皆可直接開啟。<br>
+    要新增評量，將製作好的 <code>.html</code> 放進同資料夾，並在原始碼的 <code>PAGES</code> 清單增加一筆資料即可。
   </footer>
 </div>
 
 <script>
 /* ============================================================
-   要新增一份新的評量，只要在下面加一筆資料就好：
-
+   【如何新增 / 編輯評量】
+   
+   在 PAGES 陣列中新增一筆物件，設定如下：
    {
-     group: "Grade 5",              // 分組標題，同一個 group 會排在一起
-     unit:  "Unit 2",               // 卡片上方的小標
-     title: "課次或單元名稱",         // 卡片大標
-     desc:  "一句話說明",            // 卡片說明
-     metas: ["15 個字詞", "150 句"], // 小標籤，可留空陣列 []
-     file:  "unit2-xxx.html"        // 檔名；還沒做好就寫 null，會顯示為「準備中」
+     grade: "五年級上學期",          // 【頁籤分類】會自動變成上方分頁按鈕
+     group: "Unit 1-3 · 第 1 次段考", // 【區塊子分類】同一頁籤下的分組名稱
+     unit:  "Unit 1 · G3U1W1 1-15",  // 卡片上方小標
+     title: "Wolf! 1-15 單字闖關",    // 卡片大標題
+     desc:  "15 個字詞、150 句全新例句。答完立刻看中文解釋。", // 說明
+     metas: ["15 個字詞", "150 句例句"], // 標籤，可為空陣列 []
+     file:  "unit1_wolf-1-15.html"   // 檔名；若尚未完成填 null 會顯示「準備中」
    }
-
-   檔案要跟 index.html 放在同一個資料夾裡。
    ============================================================ */
 const PAGES = [
+  // ---------- 五年級上學期 ----------
   {
-    group: "五年級 · Friends and Family",
+    grade: "五年級上學期",
+    group: "Friends and Family 單元評量",
     unit:  "Unit 1 · G3U1W1 1-15",
     title: "Wolf! 1-15 單字闖關",
     desc:  "15 個字詞、150 句全新例句。動詞要選對過去式，名詞要選對複數，答完立刻看中文解釋。",
@@ -126,51 +156,109 @@ const PAGES = [
     file:  "unit1_wolf-1-15.html"
   },
   {
-    group: "五年級 · Friends and Family",
-    unit:  "Unit 2",
-    title: "準備中",
-    desc:  "下一份評量放進資料夾後，把這一筆的 file 改成新檔名就會自動變成可點的連結。",
-    metas: [],
+    grade: "五年級上學期",
+    group: "Friends and Family 單元評量",
+    unit:  "Unit 1 · G3U1W1 16-30",
+    title: "Wolf! 16-30 單字闖關",
+    desc:  "15 個字詞、150 句全新例句。動詞要選對過去式，名詞要選對複數，答完立刻看中文解釋。",
+    metas: ["15 個字詞", "150 句例句", "15 / 30 題可選"],
+    file:  "unit1-wolf_16-30.html"
+  },
+
+  // ---------- 二年級上學期 ----------
+  {
+    grade: "二年級上學期",
+    group: "Help! A story of Friendship",
+    unit:  "Unit 1 · G2U1W1",
+    title: "字詞對應",
+    desc:  "字詞測驗",
+    metas: ["基礎單字", "單字選字義或字義選單字"],
+    file:  "unit1-help_16-30.html"
+  },
+  {
+    grade: "二年級上學期",
+    group: "Starter & Unit 1",
+    unit:  "Unit 2 · Daily Objects",
+    title: "生活日常物品",
+    desc:  "常見教室用品與日常配件詞彙闖關。",
+    metas: ["10 個單字"],
     file:  null
   }
 ];
 
-/* ---------- 以下不需要修改 ---------- */
+/* ---------- 頁籤切換與渲染核心（免手動修改） ---------- */
 (function(){
+  const tabNav = document.getElementById('tabNav');
   const board = document.getElementById('board');
-  const groups = [];
-  PAGES.forEach(p => {
-    let g = groups.find(x => x.name === p.group);
-    if(!g){ g = {name:p.group, items:[]}; groups.push(g); }
-    g.items.push(p);
-  });
 
-  groups.forEach(g => {
-    const ready = g.items.filter(i => i.file).length;
-    const bar = document.createElement('div');
-    bar.className = 'groupbar';
-    bar.innerHTML = '<h2>' + g.name + '</h2><span class="count">' + ready + ' 份</span>';
-    board.appendChild(bar);
+  // 取得所有不重複的 grade 列表
+  const grades = [...new Set(PAGES.map(p => p.grade || "預設分組"))];
+  let currentGrade = grades[0] || "";
 
-    const grid = document.createElement('div');
-    grid.className = 'grid';
-    g.items.forEach(p => {
-      const live = !!p.file;
-      const card = document.createElement(live ? 'a' : 'div');
-      card.className = 'item' + (live ? '' : ' soon');
-      if(live) card.href = p.file;
-      const metas = (p.metas || []).map(m => '<span class="meta">' + m + '</span>').join('');
-      card.innerHTML =
-        '<div class="unit">' + p.unit + '</div>' +
-        '<h3>' + p.title + '</h3>' +
-        '<p>' + p.desc + '</p>' +
-        (metas ? '<div class="metas">' + metas + '</div>' : '') +
-        '<div class="open">' + (live ? '開始作答 <span>→</span>' : '準備中') + '</div>';
-      grid.appendChild(card);
+  function renderTabs() {
+    tabNav.innerHTML = '';
+    grades.forEach(gName => {
+      const btn = document.createElement('button');
+      btn.className = 'tab-btn' + (gName === currentGrade ? ' active' : '');
+      
+      // 計算該年級中已完成 (file !== null) 的數量
+      const liveCount = PAGES.filter(p => p.grade === gName && p.file).length;
+      
+      btn.innerHTML = `${gName} <span class="tab-count">${liveCount}</span>`;
+      btn.onclick = () => {
+        currentGrade = gName;
+        renderTabs();
+        renderCards();
+      };
+      tabNav.appendChild(btn);
     });
-    board.appendChild(grid);
-  });
+  }
 
+  function renderCards() {
+    board.innerHTML = '';
+    const filteredPages = PAGES.filter(p => p.grade === currentGrade);
+
+    // 依據 group 分組
+    const groups = [];
+    filteredPages.forEach(p => {
+      let g = groups.find(x => x.name === p.group);
+      if(!g){ g = {name: p.group, items: []}; groups.push(g); }
+      g.items.push(p);
+    });
+
+    groups.forEach(g => {
+      const ready = g.items.filter(i => i.file).length;
+      const bar = document.createElement('div');
+      bar.className = 'groupbar';
+      bar.innerHTML = `<h2>${g.name}</h2><span class="count">${ready} 份已就緒</span>`;
+      board.appendChild(bar);
+
+      const grid = document.createElement('div');
+      grid.className = 'grid';
+      
+      g.items.forEach(p => {
+        const live = !!p.file;
+        const card = document.createElement(live ? 'a' : 'div');
+        card.className = 'item' + (live ? '' : ' soon');
+        if(live) card.href = p.file;
+        
+        const metas = (p.metas || []).map(m => `<span class="meta">${m}</span>`).join('');
+        card.innerHTML = `
+          <div class="unit">${p.unit}</div>
+          <h3>${p.title}</h3>
+          <p>${p.desc}</p>
+          ${metas ? `<div class="metas">${metas}</div>` : ''}
+          <div class="open">${live ? '開始作答 <span>→</span>' : '準備中'}</div>
+        `;
+        grid.appendChild(card);
+      });
+      board.appendChild(grid);
+    });
+  }
+
+  // 初始化
+  renderTabs();
+  renderCards();
 })();
 </script>
 </body>
