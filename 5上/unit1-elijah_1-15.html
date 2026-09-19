@@ -1,0 +1,1269 @@
+﻿<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MINECRAFT 單字大冒險 · Elijah McCoy 1-15</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,600;0,700;1,700&family=Fredoka:wght@600;700&family=Noto+Sans+TC:wght@500;700;900&display=swap">
+<style>
+:root{
+  --mc-sky:#72A8FF;
+  --mc-sky-light:#C4DCFF;
+  --mc-grass:#5B9E2D;
+  --mc-grass-light:#7EC93B;
+  --mc-dirt:#866043;
+  --mc-wood:#B8860B;
+  --mc-gui-bg:#C6C6C6;
+  --mc-gui-light:#FFFFFF;
+  --mc-gui-dark:#555555;
+  --mc-gui-border:#000000;
+  --mc-slot-bg:#8B8B8B;
+  --mc-text-dark:#1E1E1E;
+  --mc-text-shadow:#FFFFFF;
+  --mc-diamond:#00A8A8;
+  --mc-emerald:#1E8827;
+  --mc-gold:#D48800;
+  --mc-redstone:#D92525;
+  --mc-exp-green:#2BB20C;
+  --font-pixel:"Chakra Petch", "Fredoka", monospace, sans-serif;
+  --font-main:"Noto Sans TC", sans-serif;
+}
+*{box-sizing:border-box}
+body{
+  margin:0; color:var(--mc-text-dark);
+  background-color:var(--mc-sky);
+  background-image:
+    linear-gradient(180deg, #5C94FC 0%, #A4C6FF 65%, #62A435 65%, #4C8226 100%),
+    radial-gradient(circle at 85% 15%, #FFF6A0 0%, rgba(255,246,160,0) 25%);
+  background-repeat:no-repeat; background-attachment:fixed;
+  font-family:var(--font-main); font-size:16px; line-height:1.6; user-select:none;
+}
+.wrap{max-width:880px; margin:0 auto; padding:20px 16px 80px;}
+.mc-box{
+  background:var(--mc-gui-bg); border:4px solid var(--mc-gui-border);
+  box-shadow:inset 4px 4px 0px var(--mc-gui-light), inset -4px -4px 0px var(--mc-gui-dark), 0 8px 16px rgba(0,0,0,0.25);
+}
+.mc-btn{
+  font-family:var(--font-pixel); font-weight:700; cursor:pointer; background:#B4B4B4; color:#222;
+  border:3px solid #000; box-shadow:inset 3px 3px 0px #FFF, inset -3px -3px 0px #666, 0 4px 0 #333;
+  padding:10px 16px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+  transition:transform 0.05s, box-shadow 0.05s; text-decoration:none;
+}
+.mc-btn:hover{background:#C8C8C8; box-shadow:inset 3px 3px 0px #FFF, inset -3px -3px 0px #777, 0 4px 0 #333;}
+.mc-btn:active{transform:translateY(3px); box-shadow:inset 3px 3px 0px #555, inset -3px -3px 0px #FFF, 0 1px 0 #333;}
+.mc-btn-diamond{background:#3DC5C8; color:#033C3D; box-shadow:inset 3px 3px 0px #A3FFFF, inset -3px -3px 0px #1F7375, 0 5px 0 #0D3E40; font-size:18px; letter-spacing:0.5px;}
+.mc-btn-diamond:hover{background:#4AE0E3;}
+.mc-btn-danger{background:#E57373; color:#5C0000; box-shadow:inset 3px 3px 0px #FFCDD2, inset -3px -3px 0px #B71C1C, 0 4px 0 #333; font-size:15px;}
+.mc-btn-danger:hover{background:#EF9A9A;}
+
+header.status-bar{
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+  background:rgba(255,255,255,0.9); border:3px solid #000; padding:10px 16px; margin-bottom:20px;
+  box-shadow:inset 2px 2px 0 #FFF, 0 4px 10px rgba(0,0,0,0.15);
+}
+.player-info{display:flex; align-items:center; gap:12px;}
+.avatar{
+  width:44px; height:44px; background:#C6C6C6; border:3px solid #000;
+  display:flex; align-items:center; justify-content:center; font-size:24px;
+  box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #555;
+}
+.rank-meta{display:flex; flex-direction:column; gap:2px;}
+.rank-title{font-family:var(--font-pixel); font-weight:700; font-size:14px; color:#2E5618;}
+.exp-bar-wrap{
+  width:160px; height:12px; background:#333; border:2px solid #000; position:relative; overflow:hidden;
+}
+.exp-bar{height:100%; background:var(--mc-exp-green); width:0%; transition:width 0.3s cubic-bezier(.2,.8,.4,1);}
+.exp-text{font-size:11px; font-family:var(--font-pixel); color:#555; font-weight:700;}
+
+.header-btns{display:flex; gap:8px;}
+
+.pad{padding:24px;}
+.setup-hero{text-align:center; padding:10px 0 20px;}
+.setup-hero h1{
+  font-family:var(--font-pixel); font-size:32px; margin:8px 0 4px; color:#1C3D5A;
+  text-shadow:2px 2px 0 #FFF;
+}
+.setup-hero h1 span{color:#D48800;}
+.hero-badge{
+  display:inline-block; font-family:var(--font-pixel); font-size:13px; font-weight:700;
+  background:#FFD54F; border:2px solid #000; padding:3px 10px; box-shadow:2px 2px 0 #000;
+  color:#4A3200;
+}
+.hero-desc{color:#444; font-size:15px; margin:6px 0 0;}
+
+.stats-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:12px; margin:20px 0;}
+.stat-box{
+  background:#DCDCDC; border:3px solid #000; padding:12px; text-align:center;
+  box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #888;
+}
+.stat-box .val{font-family:var(--font-pixel); font-size:26px; font-weight:700; color:#005B5C;}
+.stat-box .lbl{font-size:12px; color:#555; font-weight:700; margin-top:2px;}
+
+.modes-label{font-family:var(--font-pixel); font-weight:700; font-size:14px; margin:16px 0 8px; display:block; color:#222;}
+.modes{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px; margin-bottom:24px;}
+.mode-card{
+  background:#E0E0E0; border:3px solid #000; padding:14px 10px; text-align:center; cursor:pointer;
+  box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #777, 0 3px 0 #222;
+  transition:all .1s;
+}
+.mode-card:hover{background:#EAEAEA; transform:translateY(-2px); box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #777, 0 5px 0 #222;}
+.mode-card[aria-pressed="true"]{
+  background:#A5D6A7; border-color:#1B5E20; box-shadow:inset 3px 3px 0 #2E7D32, inset -2px -2px 0 #E8F5E9;
+  transform:translateY(2px);
+}
+.mode-card .icon{font-size:26px; display:block; margin-bottom:4px;}
+.mode-card .title{font-family:var(--font-pixel); font-weight:700; font-size:15px; color:#1B5E20;}
+.mode-card .desc{font-size:12px; color:#444; margin-top:4px;}
+
+.adventure-hud{
+  display:flex; justify-content:space-between; align-items:center; gap:8px;
+  background:#333; color:#FFF; padding:10px 14px; border:3px solid #000;
+  font-family:var(--font-pixel); font-size:14px; margin-bottom:16px;
+}
+.hud-progress{display:flex; align-items:center; gap:10px;}
+.hud-bar-wrap{width:140px; height:10px; background:#555; border:1px solid #000; overflow:hidden;}
+.hud-bar{height:100%; background:#4AE0E3; width:0%; transition:width .2s;}
+.hud-score{color:#FFD54F; font-weight:700;}
+.combo-alert{
+  background:#FF3D00; color:#FFF; padding:2px 8px; border:2px solid #000;
+  font-family:var(--font-pixel); font-weight:700; font-size:12px;
+  animation:pulse .5s infinite alternate; display:none;
+}
+@keyframes pulse { from{transform:scale(1);} to{transform:scale(1.08);} }
+
+.q-panel{
+  background:#FFF; border:3px solid #000; padding:22px; margin-bottom:16px;
+  box-shadow:inset 2px 2px 0 #EEE, 0 4px 8px rgba(0,0,0,0.1); position:relative;
+}
+.q-meta{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+.q-tag{
+  background:#455A64; color:#FFF; font-family:var(--font-pixel); font-size:12px;
+  padding:3px 8px; border:2px solid #000; font-weight:700;
+}
+.q-pos{
+  background:#E0F2F1; color:#00695C; border:2px solid #004D40; font-family:var(--font-pixel);
+  font-size:12px; padding:2px 8px; font-weight:700;
+}
+.sentence{
+  font-size:20px; line-height:1.7; color:#111; font-weight:700; margin:16px 0;
+  min-height:64px; word-break:break-word;
+}
+.sentence .blank{
+  display:inline-block; min-width:110px; padding:0 12px; margin:0 4px; text-align:center;
+  border-bottom:4px dashed #00838F; color:#00838F; font-weight:900;
+}
+.sentence .blank.good{border-bottom:4px solid #2E7D32; color:#2E7D32; animation:glowGreen .4s;}
+.sentence .blank.bad{border-bottom:4px solid #C62828; color:#C62828; animation:shake .3s;}
+
+.word-bank-label{
+  font-family:var(--font-pixel); font-weight:700; font-size:13px; color:#444;
+  margin:12px 0 8px; display:flex; align-items:center; gap:6px;
+}
+.word-bank{
+  display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:8px;
+  background:#ECEFF1; border:3px solid #000; padding:12px;
+}
+.word-btn{
+  background:#FAFAFA; border:2px solid #37474F; padding:10px 8px; font-family:var(--font-pixel);
+  font-size:14px; font-weight:700; cursor:pointer; text-align:center; color:#263238;
+  box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #B0BEC5, 0 2px 0 #37474F;
+  transition:all .05s;
+}
+.word-btn:hover{background:#FFF; transform:translateY(-1px); box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #B0BEC5, 0 3px 0 #37474F;}
+.word-btn:active{transform:translateY(2px); box-shadow:inset 2px 2px 0 #90A4AE, inset -2px -2px 0 #FFF, 0 0 0;}
+.word-btn.selected{
+  background:#80DEEA; border-color:#006064; color:#004D40;
+  box-shadow:inset 2px 2px 0 #E0F7FA, inset -2px -2px 0 #00838F; transform:translateY(1px);
+}
+
+.forms-panel{
+  margin-top:14px; background:#FFF8E1; border:3px solid #F57F17; padding:12px;
+  animation:slideDown .2s;
+}
+@keyframes slideDown{ from{opacity:0; transform:translateY(-6px);} to{opacity:1; transform:translateY(0);} }
+.forms-title{font-family:var(--font-pixel); font-weight:700; font-size:13px; color:#E65100; margin:0 0 8px;}
+.forms-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:8px;}
+.form-btn{
+  background:#FFF; border:2px solid #FF8F00; padding:10px; font-family:var(--font-pixel);
+  font-size:14px; font-weight:700; cursor:pointer; text-align:center; color:#BF360C;
+  box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #FFE082, 0 2px 0 #E65100;
+}
+.form-btn:hover{background:#FFFDE7; transform:translateY(-1px);}
+.form-btn:active{transform:translateY(2px); box-shadow:none;}
+.form-btn em{display:block; font-size:11px; font-style:normal; color:#8D6E63; font-weight:500;}
+
+.feedback-card{
+  margin-top:16px; border:3px solid #000; padding:14px; background:#E8F5E9;
+  box-shadow:inset 2px 2px 0 #FFF, 0 3px 6px rgba(0,0,0,0.1); animation:slideDown .2s;
+}
+.feedback-card.wrong{background:#FFEBEE; border-color:#B71C1C;}
+.fb-title{font-family:var(--font-pixel); font-size:16px; font-weight:700; margin-bottom:4px; display:flex; align-items:center; gap:8px;}
+.feedback-card.wrong .fb-title{color:#B71C1C;}
+.feedback-card:not(.wrong) .fb-title{color:#1B5E20;}
+.fb-zh{font-size:15px; color:#222; margin:4px 0 8px; font-weight:700;}
+.fb-note{font-size:13px; color:#555; background:rgba(255,255,255,0.7); padding:8px; border:1px solid #CCC; margin-bottom:10px;}
+.fb-explain{margin-top:12px; background:#FFFCEB; border:2px dashed #C89218; padding:10px 14px; border-radius:4px; text-align:left;}
+.fb-exp-title{font-family:var(--font-pixel); font-size:13px; color:#7D4E00; font-weight:700; margin-bottom:4px;}
+.fb-exp-text{font-size:14px; color:#332508; line-height:1.6;}
+.review-item .rev-exp{font-size:13px; color:#533604; background:#FFFDE8; border:1px solid #D6A429; border-radius:4px; padding:6px 10px; margin-top:6px; line-height:1.5;}
+
+.result-hero{text-align:center; padding:10px 0 20px;}
+.result-hero h2{font-family:var(--font-pixel); font-size:30px; margin:6px 0; color:#1B5E20;}
+.score-big{font-family:var(--font-pixel); font-size:56px; font-weight:700; color:#D84315; text-shadow:2px 2px 0 #FFF;}
+.result-pills{display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin:16px 0;}
+.gain-pill{
+  background:#FFF; border:2px solid #000; padding:6px 14px; font-family:var(--font-pixel);
+  font-weight:700; font-size:14px; box-shadow:2px 2px 0 #000;
+}
+
+.review-list{max-height:360px; overflow-y:auto; border:3px solid #000; background:#FFF; padding:12px; margin:16px 0;}
+.review-item{padding:10px; border-bottom:1px dashed #CCC;}
+.review-item:last-child{border-bottom:none;}
+.review-item.no{background:#FFEBEE;}
+.review-item .sent{font-weight:700; font-size:14px; color:#111;}
+.review-item .sent u{color:#00796B; text-decoration:underline;}
+.review-item.no .sent u{color:#C62828;}
+.review-item .trans{font-size:13px; color:#555; margin-top:4px}
+
+.badge-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; margin-top:16px}
+.badge-card{background:#D0D0D0; border:3px solid #888; padding:14px; display:flex; align-items:center; gap:12px; opacity:.4; filter:grayscale(1);}
+.badge-card.unlocked{opacity:1; filter:none; border-color:#000; background:#FFF1C9; box-shadow:inset 2px 2px 0 #FFF, inset -2px -2px 0 #C29623;}
+.badge-icon{font-size:32px}
+.badge-meta{display:flex; flex-direction:column}
+.badge-name{font-family:var(--font-pixel); font-size:16px; font-weight:700; color:#8C4B00;}
+.badge-desc{font-size:12px; color:#555; margin-top:2px}
+
+.key-table{width:100%; border-collapse:collapse; font-size:14px}
+.key-table th{text-align:left; font-size:12px; color:#555; border-bottom:3px solid #000; padding:8px; font-family:var(--font-pixel)}
+.key-table td{border-bottom:1px solid #AAA; padding:10px 8px; vertical-align:top}
+.key-table td:first-child{font-family:var(--font-pixel); font-weight:700; color:#007A7C}
+.key-table .w{font-weight:800; font-size:16px; color:#111}
+.key-table .zh{color:#555; font-size:13px}
+.key-table .forms{color:#0D6612; font-size:13px; font-weight:700;}
+
+.btn-group{display:flex; gap:10px; flex-wrap:wrap; margin-top:20px}
+.btn-group .mc-btn-diamond{flex:1; min-width:180px}
+.hidden{display:none!important}
+canvas#confetti{position:fixed; top:0; left:0; width:100vw; height:100vh; pointer-events:none; z-index:999}
+</style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="wrap">
+  <header class="status-bar">
+    <div class="player-info">
+      <div class="avatar" id="playerAvatar">🗡️</div>
+      <div class="rank-meta">
+        <div class="rank-title" id="playerRankTitle">Lv.1 木劍冒險家</div>
+        <div class="exp-bar-wrap"><div class="exp-bar" id="expBar"></div></div>
+        <div class="exp-text" id="expText">0 / 300 EXP</div>
+      </div>
+    </div>
+    <div class="header-btns">
+      <a href="../index.html" class="mc-btn">🏠 首頁</a>
+      <button class="mc-btn" id="btnSound">🔊 音效: 開</button>
+      <button class="mc-btn" id="btnBadgeHall">🏆 成就館</button>
+      <button class="mc-btn" id="btnKey">📖 合成表</button>
+    </div>
+  </header>
+
+  <!-- View 1: Setup / Home -->
+  <section id="paneSetup" class="mc-box pad">
+    <div class="setup-hero">
+      <span class="hero-badge">☀️ G3U1W4 · Elijah McCoy (1-15)</span>
+      <h1>單字大冒險 <span>WORD QUEST</span></h1>
+      <p class="hero-desc">15 種核心戰利品單字 · 150 場晴空原野挑戰 · 連擊暴擊爽快升級！</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="val" id="statAnswered">0</div>
+        <div class="lbl">累計挖掘題數</div>
+      </div>
+      <div class="stat-box">
+        <div class="val" id="statMaxCombo">0x</div>
+        <div class="lbl">最高暴擊 Combo</div>
+      </div>
+      <div class="stat-box">
+        <div class="val" id="statBadges">0 / 5</div>
+        <div class="lbl">已解鎖成就勳章</div>
+      </div>
+    </div>
+
+    <label class="modes-label">選擇本次冒險規模：</label>
+    <div class="modes">
+      <button type="button" class="mode-card" data-n="10" aria-pressed="false">
+        <span class="icon">🧭</span>
+        <span class="title">快速巡查</span>
+        <span class="desc">10 題隨機挑戰</span>
+      </button>
+      <button type="button" class="mode-card" data-n="25" aria-pressed="true">
+        <span class="icon">⚔️</span>
+        <span class="title">標準探險</span>
+        <span class="desc">25 題淬鍊戰鬥</span>
+      </button>
+      <button type="button" class="mode-card" data-n="50" aria-pressed="false">
+        <span class="icon">🏆</span>
+        <span class="title">無盡討伐</span>
+        <span class="desc">50 題終極試煉</span>
+      </button>
+    </div>
+
+    <button class="mc-btn mc-btn-diamond" id="btnStartGame" style="width:100%;font-size:20px;padding:14px;">
+      ⚔️ 進入傳送門 · 開始冒險！
+    </button>
+  </section>
+
+  <!-- View 2: Quest Playing -->
+  <section id="paneQuest" class="mc-box pad hidden">
+    <div class="adventure-hud">
+      <div class="hud-progress">
+        <span id="hudProgress">Q 1 / 25</span>
+        <div class="hud-bar-wrap"><div class="hud-bar" id="hudBar"></div></div>
+      </div>
+      <div class="combo-alert" id="comboAlert">💥 2x CRITICAL!</div>
+      <div class="hud-score" id="hudScore">⭐ 0</div>
+    </div>
+
+    <div class="q-panel">
+      <div class="q-meta">
+        <span class="q-tag" id="qNum">Q1</span>
+        <span class="q-pos" id="qPos">v.</span>
+      </div>
+
+      <div class="sentence" id="sentenceBox">
+        Loading challenge sentence...
+      </div>
+
+      <div id="interactionArea">
+        <div class="word-bank-label">📦 單字物品欄 (選擇對應的單字核心)：</div>
+        <div class="word-bank" id="wordBank"></div>
+        <div id="formsArea"></div>
+      </div>
+
+      <div id="feedbackArea"></div>
+    </div>
+  </section>
+
+  <!-- View 3: Quest Summary -->
+  <section id="paneResult" class="mc-box pad hidden">
+    <div class="result-hero">
+      <span class="hero-badge">QUEST COMPLETED!</span>
+      <h2 id="resultTitle">🎉 冒險結算清單</h2>
+      <div class="score-big" id="finalScore">0</div>
+      <p id="finalRemark" style="color:#555;font-weight:700;margin-top:4px;">命中率 100% · 完美通關！</p>
+
+      <div class="result-pills">
+        <div class="gain-pill" id="gainExp">+0 EXP</div>
+        <div class="gain-pill" id="gainCombo">最高連擊: 0x</div>
+      </div>
+
+      <div class="review-list" id="reviewList"></div>
+
+      <div class="btn-group">
+        <button class="mc-btn mc-btn-diamond" id="btnPlayAgain">🔄 再探險一次</button>
+        <button class="mc-btn" id="btnBackHome">🏠 返回重生點</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- View 4: Badges Showcase -->
+  <section id="paneBadges" class="mc-box pad hidden">
+    <h2 style="font-family:var(--font-pixel);margin:0 0 6px;color:#8C4B00;">🏆 冒險者成就館</h2>
+    <p style="color:#555;font-size:14px;margin:0 0 16px;">達成冒險挑戰以解鎖專屬成就並獲取大量 EXP 獎勵！</p>
+    <div class="badge-grid" id="badgeGrid"></div>
+    <div class="btn-group">
+      <button class="mc-btn mc-btn-diamond" id="btnBackFromBadges">返回主頁</button>
+    </div>
+  </section>
+
+  <!-- View 5: Key Sheet -->
+  <section id="paneKey" class="mc-box pad hidden">
+    <h2 style="font-family:var(--font-pixel);margin:0 0 6px;color:#006A6B;">📖 單字合成表（全覽）</h2>
+    <p style="color:#555;font-size:14px;margin:0 0 16px;">複習這 15 個單字的基本義與時態、形態合成公式。</p>
+
+    <div style="overflow-x:auto">
+      <table class="key-table">
+        <thead><tr><th>#</th><th>單字 / 中文</th><th>詞性</th><th>所有變化形態</th></tr></thead>
+        <tbody id="keyTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="btn-group">
+      <button class="mc-btn mc-btn-diamond" id="btnRestartFromKey">🚀 立即重新挑戰</button>
+      <button class="mc-btn" id="btnBackFromKey">返回主頁</button>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ---------- 8-Bit 像素音效 ---------- */
+class SoundEngine {
+  constructor() {
+    this.ctx = null;
+    this.enabled = true;
+  }
+  init() {
+    if (!this.ctx) {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (AudioCtx) this.ctx = new AudioCtx();
+    }
+  }
+  beep(freq, duration, type="square", gainVal=0.08) {
+    if (!this.enabled) return;
+    try {
+      this.init();
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+      gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + duration);
+    } catch(e){}
+  }
+  click() { this.beep(400, 0.04, "triangle", 0.05); }
+  correct(combo=1) {
+    const base = 440 * Math.pow(1.05, Math.min(combo, 12));
+    this.beep(base, 0.08, "sine", 0.1);
+    setTimeout(() => this.beep(base * 1.5, 0.12, "sine", 0.1), 70);
+  }
+  wrong() {
+    this.beep(180, 0.12, "sawtooth", 0.12);
+    setTimeout(() => this.beep(130, 0.2, "sawtooth", 0.12), 100);
+  }
+  levelUp() {
+    [330, 392, 493, 587, 659].forEach((f, i) => {
+      setTimeout(() => this.beep(f, 0.1, "triangle", 0.12), i * 70);
+    });
+  }
+}
+const sfx = new SoundEngine();
+
+/* ---------- 彩帶效果 ---------- */
+function launchConfetti() {
+  const canvas = document.getElementById('confetti');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = [];
+  const colors = ['#00A8A8', '#1E8827', '#D48800', '#D92525', '#FFFFFF', '#7EC93B'];
+  for (let i = 0; i < 70; i++) {
+    pieces.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      vx: (Math.random() - 0.5) * 14,
+      vy: (Math.random() - 0.8) * 14,
+      size: Math.random() * 8 + 4,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    });
+  }
+  let frame = 0;
+  function update() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx; p.y += p.vy; p.vy += 0.5;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+    });
+    frame++;
+    if (frame < 100) requestAnimationFrame(update);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  update();
+}
+
+/* ---------- 題庫資料 (G3U1W4 1-15) ---------- */
+const WORDS = [
+ {w:"mow", pos:"v.", zh:"割草、修剪草坪", forms:[{f:"mow",t:"原形"},{f:"mows",t:"三單"},{f:"mowed",t:"過去式"},{f:"mowing",t:"-ing"}]},
+ {w:"tinker with", pos:"phr.v.", zh:"擺弄、修補、琢磨改進某物", forms:[{f:"tinker with",t:"原形"},{f:"tinkers with",t:"三單"},{f:"tinkered with",t:"過去式"},{f:"tinkering with",t:"-ing"}]},
+ {w:"mechanical", pos:"adj.", zh:"機械的、機械原理的", forms:[{f:"mechanical",t:"形容詞"}]},
+ {w:"engineer", pos:"n.", zh:"工程師、技師", forms:[{f:"engineer",t:"單數"},{f:"engineers",t:"複數"}]},
+ {w:"grease", pos:"v.", zh:"塗潤滑油、使潤滑", forms:[{f:"grease",t:"原形"},{f:"greases",t:"三單"},{f:"greased",t:"過去式"},{f:"greasing",t:"-ing"}]},
+ {w:"letdown", pos:"n.", zh:"令人失望的事、掃興", forms:[{f:"letdown",t:"單數"},{f:"letdowns",t:"複數"}]},
+ {w:"design", pos:"v.", zh:"設計、構思圖樣", forms:[{f:"design",t:"原形"},{f:"designs",t:"三單"},{f:"designed",t:"過去式"},{f:"designing",t:"-ing"}]},
+ {w:"soot", pos:"n.", zh:"煤煙、煤灰（黑色粉末）", forms:[{f:"soot",t:"不可數名詞"}]},
+ {w:"cinder", pos:"n.", zh:"煤渣、餘燼、微火燃煤", forms:[{f:"cinder",t:"單數"},{f:"cinders",t:"複數"}]},
+ {w:"grease monkey", pos:"n.", zh:"機械修理工、黑手技師", forms:[{f:"grease monkey",t:"單數"},{f:"grease monkeys",t:"複數"}]},
+ {w:"grimy", pos:"adj.", zh:"沾滿污垢的、油膩髒污的", forms:[{f:"grimy",t:"形容詞"}]},
+ {w:"bale", pos:"v.", zh:"把...打包成捆、捆紮（草或棉花）", forms:[{f:"bale",t:"原形"},{f:"bales",t:"三單"},{f:"baled",t:"過去式"},{f:"baling",t:"-ing"}]},
+ {w:"raw", pos:"adj.", zh:"未加工的、生的、天然原料的", forms:[{f:"raw",t:"形容詞"}]},
+ {w:"tank up", pos:"phr.v.", zh:"給...加滿油/水、加滿油箱", forms:[{f:"tank up",t:"原形"},{f:"tanks up",t:"三單"},{f:"tanked up",t:"過去式"},{f:"tanking up",t:"-ing"}]},
+ {w:"billow", pos:"v.", zh:"（煙霧）翻滾、巨浪般湧起、鼓脹", forms:[{f:"billow",t:"原形"},{f:"billows",t:"三單"},{f:"billowed",t:"過去式"},{f:"billowing",t:"-ing"}]}
+];
+
+const QS = [
+/* 0 mow */
+[
+ {s:"Dad asked me to help him ___ the overgrown lawn.", a:"mow", zh:"爸爸叫我幫他修剪修割雜草叢生的草坪。"},
+ {s:"The groundskeeper ___ the football pitch every Friday.", a:"mows", zh:"場地管理員每週五修剪足球球場的草皮。"},
+ {s:"Yesterday afternoon, Uncle Joe ___ all the tall grass behind the barn.", a:"mowed", zh:"昨天下午，喬叔叔割完了穀倉後面的所有高草。"},
+ {s:"He is out in the front garden, ___ the lawn with an electric machine.", a:"mowing", zh:"他在前院花園裡，正用電動割草機修剪草坪。"},
+ {s:"It takes about an hour to ___ our entire backyard.", a:"mow", zh:"修割完我們整個後院大約需要一個小時。"},
+ {s:"The farmer ___ the clover meadow before summer rains start.", a:"mows", zh:"農夫在夏雨開始之前修割了三葉草草甸。"},
+ {s:"They ___ the municipal park pathways early this morning.", a:"mowed", zh:"他們今天清晨修剪割除了市立公園步道旁的雜草。"},
+ {s:"We could hear the loud machine ___ fresh grass down the street.", a:"mowing", zh:"我們能聽見街道下坡處正在割鮮草的巨大機器聲。"},
+ {s:"You should never ___ wet grass because it clogs the sharp blade.", a:"mow", zh:"你絕不該割濕草，因為濕草會堵塞鋒利的刀片。"},
+ {s:"Our neighbor kindly ___ our front lawn while we were on trip.", a:"mowed", zh:"我們去旅行期間，鄰居親切地幫我們割了前院草坪。"}
+],
+/* 1 tinker with */
+[
+ {s:"On weekends, Grandpa loves to ___ old mechanical clocks.", a:"tinker with", zh:"每逢週末，爺爺喜歡擺弄修理老舊的機械鐘。"},
+ {s:"My brother always ___ his bicycle gears until they run smoothly.", a:"tinkers with", zh:"我哥哥總是擺弄調校自行車齒輪，直到轉動順暢。"},
+ {s:"The young inventor ___ broken radios to understand how they work.", a:"tinkered with", zh:"年輕的發明家擺弄拆裝壞掉的收音機，以理解運作原理。"},
+ {s:"Dad spent all Sunday in the garage, ___ the lawnmower motor.", a:"tinkering with", zh:"爸爸整個星期天都在車庫裡擺弄修理割草機的馬達。"},
+ {s:"Do not ___ the delicate settings of the science microscope.", a:"tinker with", zh:"請勿隨意擺弄竄改科學顯微鏡的精細設定。"},
+ {s:"She often ___ discarded electronics to build fun robotic models.", a:"tinkers with", zh:"她常琢磨改進被丟棄的電子零件以製作好玩的機器人模型。"},
+ {s:"Elijah McCoy ___ locomotive parts until he designed a lubricator.", a:"tinkered with", zh:"伊利亞·麥考伊反覆琢磨火車零件，直到設計出自動潤滑器。"},
+ {s:"The mechanic is currently ___ the antique sports car engine.", a:"tinkering with", zh:"技師目前正在擺弄修整老式跑車的引擎。"},
+ {s:"Curious students like to ___ simple wooden gears in laboratory.", a:"tinker with", zh:"好奇的學生喜歡在實驗室裡擺弄簡單的木製齒輪。"},
+ {s:"He ___ the toy train track until the engine moved flawlessly.", a:"tinkered with", zh:"他不斷擺弄調校玩具火車軌道，直到火車頭順暢行駛。"}
+],
+/* 2 mechanical */
+[
+ {s:"The grandfather clock ticks steadily due to its intricate ___ gears.", a:"mechanical", zh:"老爺鐘因其精密的機械齒輪而穩定地滴答作響。"},
+ {s:"Elijah possessed exceptional ___ talent and solved machine troubles.", a:"mechanical", zh:"伊利亞擁有非凡的機械天賦，解決了許多機器難題。"},
+ {s:"Engineers study ___ principles to construct reliable railway systems.", a:"mechanical", zh:"工程師研究機械原理以構建可靠的鐵路系統。"},
+ {s:"The robotic toy walks across the floor using clever ___ joints.", a:"mechanical", zh:"機器人玩具使用精巧的機械關節在地板上行走。"},
+ {s:"Our car experienced a minor ___ failure with the steering pump.", a:"mechanical", zh:"我們的小汽車在轉向泵方面遇到了輕微的機械故障。"},
+ {s:"Modern assembly factories rely on fast ___ arms to build cars.", a:"mechanical", zh:"現代裝配工廠依靠快速的機械手臂來製造汽車。"},
+ {s:"His grandfather had a natural knack for solving difficult ___ problems.", a:"mechanical", zh:"他的祖父具有解決複雜機械難題的與生俱來之天賦。"},
+ {s:"The department store escalator stopped due to a sudden ___ defect.", a:"mechanical", zh:"百貨公司電扶梯由於突發的機械缺陷而停止運轉。"},
+ {s:"She hopes to study ___ engineering at university next year.", a:"mechanical", zh:"她希望明年能在大學研讀機械工程學系。"},
+ {s:"The ancient stone windmill demonstrates remarkable ___ knowledge.", a:"mechanical", zh:"這座古老的石製風車展現了非凡的機械知識。"}
+],
+/* 3 engineer */
+[
+ {s:"A brilliant ___ designed the sturdy suspension bridge over river.", a:"engineer", zh:"一位傑出的工程師設計了跨越河流的堅固吊橋。"},
+ {s:"Experienced railway ___ collaborated to lay the transcontinental line.", a:"engineers", zh:"經驗豐富的鐵路工程師通力合作鋪設了橫貫大陸的線路。"},
+ {s:"Elijah McCoy was a gifted African American ___ and prolific inventor.", a:"engineer", zh:"伊利亞·麥考伊是一位才華橫溢的非裔美國工程師與多產發明家。"},
+ {s:"Software and civil ___ work together to plan modern smart cities.", a:"engineers", zh:"軟體和土木工程師攜手合作規劃現代智慧城市。"},
+ {s:"The locomotive ___ inspected the steam valves prior to departure.", a:"engineer", zh:"火車火車頭司機/技師在出發前檢查了蒸汽閥門。"},
+ {s:"A team of aerospace ___ tested the rocket propulsion engines.", a:"engineers", zh:"航太工程師團隊測試了火箭推進發動機。"},
+ {s:"My older sister dreams of becoming a certified environmental ___.", a:"engineer", zh:"我姊姊夢想成為一名領有執照的環境工程師。"},
+ {s:"Railroad ___ had to overcome high mountain passes and gorges.", a:"engineers", zh:"鐵路工程師必須克服崇山峻嶺的隘口與峽谷。"},
+ {s:"The audio ___ adjusted the mixing console before the live show.", a:"engineer", zh:"音訊工程師在現場演出前調整了調音台。"},
+ {s:"Thousands of skilled ___ contributed to the space shuttle program.", a:"engineers", zh:"數以千計的熟練工程師為太空梭計劃貢獻了力量。"}
+],
+/* 4 grease */
+[
+ {s:"Train workers had to stop frequently and ___ the wheel axles.", a:"grease", zh:"火車工人們必須頻繁停車並給車輪軸塗潤滑油。"},
+ {s:"The cautious mechanic ___ the heavy garage door rollers regularly.", a:"greases", zh:"細心的技師定期給沉重的車庫門滾輪塗上潤滑油。"},
+ {s:"Yesterday, the maintenance crew ___ all the gears of the press.", a:"greased", zh:"昨天，維修人員為衝壓機的所有齒輪都塗抹了潤滑油。"},
+ {s:"Look at the apprentice; he is ___ the conveyor chain with black oil.", a:"greasing", zh:"看那個學徒，他正在用黑機油給輸送帶鏈條塗潤滑油。"},
+ {s:"You must always ___ moving metal joints to prevent friction damage.", a:"grease", zh:"你必須經常為運動的金屬關節上油潤滑以防摩擦損壞。"},
+ {s:"Dad ___ the wheel bearings of our lawn trailer each spring.", a:"greases", zh:"爸爸每年春天都會給我們割草拖車的輪軸承塗潤滑油。"},
+ {s:"The oiler ___ the hot engine parts using a long-spouted copper can.", a:"greased", zh:"加油工用一把長嘴銅油壺給滾燙的引擎部件加了潤滑油。"},
+ {s:"While ___ the drive shafts, his uniform became stained with sludge.", a:"greasing", zh:"在給傳動軸上油時，他的制服沾滿了油垢污漬。"},
+ {s:"To ensure the pulley turns smoothly without squeaking, please ___ it.", a:"grease", zh:"為確保滑輪順暢旋轉不發出吱吱聲，請給它塗潤滑油。"},
+ {s:"He carefully ___ the massive steel gears in the flour watermill.", a:"greased", zh:"他仔細地為水磨麵粉廠中巨大的鋼製齒輪塗上了潤滑油。"}
+],
+/* 5 letdown */
+[
+ {s:"Failing to qualify for the championship finals was a huge ___.", a:"letdown", zh:"未能取得錦標賽決賽資格對隊伍而言是巨大的失望與打擊。"},
+ {s:"After weeks of hyped anticipation, the movie was an utter ___.", a:"letdown", zh:"在經歷了數週的大力宣傳期待後，那部電影完全令人大失所望。"},
+ {s:"Despite several minor ___, the persistent inventor refused to stop.", a:"letdowns", zh:"儘管遇到了幾次小小的挫折與失望，堅毅的發明家拒絕放棄。"},
+ {s:"It felt like such a painful ___ when the fireworks were rained out.", a:"letdown", zh:"當煙火表演因下雨取消時，讓人感到十分掃興與失望。"},
+ {s:"Life presents both glorious triumphs and occasional bitter ___.", a:"letdowns", zh:"人生既有輝煌的勝利，偶爾也有令人痛苦的挫折失望。"},
+ {s:"Being left out of the school performance was a brief ___.", a:"letdown", zh:"沒能入選學校演出對她來說是一次短暫的失望打擊。"},
+ {s:"He hid his feelings of ___ behind a brave and cheerful smile.", a:"letdown", zh:"他把失望掃興的心情掩藏在勇敢樂觀的微笑背後。"},
+ {s:"Resilient students learn valuable lessons from academic ___.", a:"letdowns", zh:"有韌性的學生能從學業上的挫折與失望中汲取寶貴教訓。"},
+ {s:"The sudden power outage proved to be a major ___ at the party.", a:"letdown", zh:"突然停電證明是這次晚會上極度掃興的大敗筆。"},
+ {s:"Don't let a temporary ___ diminish your boundless enthusiasm.", a:"letdown", zh:"不要讓一時的失望打擊消磨了你無窮無盡的熱情。"}
+],
+/* 6 design */
+[
+ {s:"Visionary architects ___ solar-powered schools with rooftop gardens.", a:"design", zh:"有遠見的建築師設計了帶有屋頂花園的太陽能學校。"},
+ {s:"The creative couturier ___ stunning evening dresses each season.", a:"designs", zh:"富有創意的服裝設計師每季都設計出令人驚豔的晚禮服。"},
+ {s:"Elijah McCoy ___ an automatic lubricator that trains needed.", a:"designed", zh:"伊利亞·麥考伊設計了火車亟需的自動潤滑油杯。"},
+ {s:"The engineering group is currently ___ a faster electric train.", a:"designing", zh:"工程團隊目前正在設計一款速度更快的電力火車。"},
+ {s:"We volunteered to ___ colorful posters for the charity book sale.", a:"design", zh:"我們自願為慈善圖書義賣設計五彩斑斕的海報。"},
+ {s:"She cleverly ___ interactive STEM board games for elementary kids.", a:"designs", zh:"她巧妙地為國小學生設計互動式科學桌遊。"},
+ {s:"Leonardo da Vinci ___ flying contraptions long before airplanes.", a:"designed", zh:"達文西在飛機問世很久之前就構思設計了飛行器。"},
+ {s:"Young students are ___ miniature bridges using wooden craft sticks.", a:"designing", zh:"年輕學生們正在用手工木棒設計微型模型橋樑。"},
+ {s:"Can your agency help us ___ a clean, responsive company website?", a:"design", zh:"你們機構能否幫我們設計一個簡潔且響應式的公司網站？"},
+ {s:"Structural engineers ___ the skyscraper to withstand mighty earthquakes.", a:"designed", zh:"結構工程師將這座摩天大樓設計成能抵禦強烈地震。"}
+],
+/* 7 soot */
+[
+ {s:"Black ___ from the old coal stove coated the whitewashed wall.", a:"soot", zh:"老煤爐冒出的黑煤煙塗滿了刷白的牆壁。"},
+ {s:"Chimney sweeps risked health scraping thick ___ off flue tiles.", a:"soot", zh:"煙囪清潔工冒著健康風險刮除煙道磁磚上厚厚的煤煙。"},
+ {s:"The old steam engine belched dark clouds of oily ___.", a:"soot", zh:"老式蒸汽火車噴吐出滾滾黑色的油膩煤煙。"},
+ {s:"His nose and chin were dusted with black powdered ___.", a:"soot", zh:"他的鼻子和下巴上沾滿了黑色的粉末狀煤灰。"},
+ {s:"Decades of industrial smoke left layers of ___ upon the church.", a:"soot", zh:"幾十年的工業煙塵在教堂磚石上留下了層層煤灰。"},
+ {s:"She wiped greasy ___ away from the oil lamp glass chimney.", a:"soot", zh:"她把油燈玻璃罩上的油性煤黑煙灰擦掉。"},
+ {s:"Firefighters washed away the pungent ___ covering their turnout coats.", a:"soot", zh:"消防隊員洗掉了覆蓋在消防外衣上刺鼻的煙灰。"},
+ {s:"The blacksmith forge emitted dense clouds of ___ and sparks.", a:"soot", zh:"鐵匠鋪的熔鐵爐噴出濃密的煤煙與火星。"},
+ {s:"A moist sponge quickly removed fireplace ___ from the marble.", a:"soot", zh:"用濕海綿很快就把壁爐周圍大理石上的煤灰擦乾淨了。"},
+ {s:"The train fireman brushed flecks of ___ from his denim cap.", a:"soot", zh:"火車司爐工拂去牛仔布工作帽上的點點煤煙灰。"}
+],
+/* 8 cinder */
+[
+ {s:"A bright glowing ___ flew from the campfire onto the wet sand.", a:"cinder", zh:"一粒明亮熾熱的火星煤渣從營火中飛落到了濕沙上。"},
+ {s:"The railway bed was ballasted with crunchy grey volcanic ___.", a:"cinders", zh:"鐵路路基用發出嘎吱聲的灰色火山煤渣石鋪設。"},
+ {s:"Fiery ___ rained down from the steam engine smokestack.", a:"cinders", zh:"熾熱的煤渣殘屑如雨般從蒸汽機車煙囪飄落。"},
+ {s:"Be vigilant about flying ___ when burning autumn brush heaps.", a:"cinders", zh:"燃燒秋季枯樹堆時，要嚴防隨風飛揚的帶火煤灰餘燼。"},
+ {s:"Only cold grey ___ remained in the hearth by the morning.", a:"cinders", zh:"到了早晨，壁爐裡只剩下冰冷暗灰的煤渣餘燼。"},
+ {s:"Windblown red-hot ___ can ignite dry timber during drought.", a:"cinders", zh:"乾旱期間，被風吹起的赤紅餘燼可能點燃乾燥的木材。"},
+ {s:"The high school built a traditional outdoor running ___ track.", a:"cinder", zh:"這所高中修建了一條傳統的戶外煤渣跑道。"},
+ {s:"Sparks and red ___ erupted from the volcanic crater at night.", a:"cinders", zh:"火星與赤紅的熔渣在夜間從火山口噴發而出。"},
+ {s:"Grandpa scooped the burned ___ out of the wood burning stove.", a:"cinders", zh:"爺爺把燃燒過的煤渣餘燼從柴火爐裡舀了出來。"},
+ {s:"A solitary stray ___ smoldered quietly among dry pine cones.", a:"cinder", zh:"一粒孤單零散的微火餘燼在乾松果堆中暗暗冒煙。"}
+],
+/* 9 grease monkey */
+[
+ {s:"The helpful ___ at the auto shop fixed our brakes promptly.", a:"grease monkey", zh:"汽修店裡熱心的黑手機械工迅速修好了我們的煞車。"},
+ {s:"Skilled ___ worked in unison during the lightning-fast pit stop.", a:"grease monkeys", zh:"熟練的黑手技師們在閃電般的維修站停靠時協調作業。"},
+ {s:"As a young train ___, Elijah performed dirty axle lubrication.", a:"grease monkey", zh:"作為年輕的火車機修工，伊利亞承擔了骯髒的車軸潤滑工作。"},
+ {s:"Vocational schools train young ___ to repair modern diesel rigs.", a:"grease monkeys", zh:"職業學校培訓年輕的修理工修理現代大型柴油卡車。"},
+ {s:"My brother proudly calls himself a backyard ___ who loves engines.", a:"grease monkey", zh:"我弟弟自豪地稱自己是個酷愛發動機的後院黑手機械迷。"},
+ {s:"A hangar full of dedicated ___ kept the postal airplanes airborne.", a:"grease monkeys", zh:"滿機庫敬業的機修工確保了郵政飛機持續在空中執飛。"},
+ {s:"An experienced ___ can identify motor trouble by sound alone.", a:"grease monkey", zh:"經驗豐富的修理工光憑聲音就能辨識出引擎毛病。"},
+ {s:"Two lively ___ were restoring a classic muscle car in barn.", a:"grease monkeys", zh:"兩位精力充沛的黑手技師在穀倉裡翻新一輛經典肌肉車。"},
+ {s:"Prejudice forced the educated scholar to work merely as a ___.", a:"grease monkey", zh:"偏見迫使受過良好教育的學者只能屈就當一名黑手修理工。"},
+ {s:"The garage ___ scrubbed their blackened hands after the overhaul.", a:"grease monkeys", zh:"大修完成後，汽修廠的機械工們用力刷洗發黑的雙手。"}
+],
+/* 10 grimy */
+[
+ {s:"After repairing the tractor underneath, his overalls were totally ___.", a:"grimy", zh:"在曳引機底下修理了一整天後，他的工作吊帶褲滿是污垢油漬。"},
+ {s:"Rain mixed with dust streamed down the ___ factory windowpanes.", a:"grimy", zh:"雨水混合著灰塵沿著工廠油膩髒污的窗玻璃流淌下來。"},
+ {s:"He took off his ___ work gloves and placed them on workbench.", a:"grimy", zh:"他脫下沾滿油污的手套，放在了工作檯上。"},
+ {s:"The railroad mechanic washed his ___ arms with abrasive soap.", a:"grimy", zh:"鐵路技師用粗砂去污肥皂洗淨他沾滿油垢的手臂。"},
+ {s:"Steam engines covered early train passengers in dark ___ grit.", a:"grimy", zh:"早期的蒸汽火車讓乘客身上蒙上了一層黑乎乎的油灰砂礫。"},
+ {s:"She scrubbed the ___ tile floor behind the commercial oven.", a:"grimy", zh:"她用力刷洗商用烤箱後方滿是油垢的地磚。"},
+ {s:"The adventurous boy arrived home with ___ jeans and muddy boots.", a:"grimy", zh:"貪玩的男孩滿身油垢的牛仔褲和泥濘的靴子回到了家。"},
+ {s:"Decades of oil mist made the concrete workshop floor slick and ___.", a:"grimy", zh:"數十年的油霧讓混凝土車間地板變得濕滑且油垢斑斑。"},
+ {s:"Warm suds easily washed the ___ grease off the bicycle frame.", a:"grimy", zh:"溫熱的肥皂水輕易洗去了自行車架上油膩骯髒的油漬。"},
+ {s:"His forehead was ___ with engine carbon, yet his eyes shone bright.", a:"grimy", zh:"他的額頭沾滿了發動機的黑油碳垢，但目光卻炯炯有神。"}
+],
+/* 11 bale */
+[
+ {s:"The harvesting machinery can ___ alfalfa into tidy square bundles.", a:"bale", zh:"採收機械能將紫花苜蓿打包壓縮成整齊的方捆。"},
+ {s:"Every late summer, the farmer ___ golden straw for winter livestock.", a:"bales", zh:"每年夏末，農夫把金黃色麥稈打捆以供牲畜過冬。"},
+ {s:"The hardworking laborers ___ hundreds of cotton bundles in fields.", a:"baled", zh:"勤勞的工人在田地裡將數百包棉花打包成捆。"},
+ {s:"The modern farm tractor is currently ___ fragrant sweet hay.", a:"baling", zh:"現代農用曳引機目前正在田間捆紮打包芳香的甜乾草。"},
+ {s:"Recycling plants use hydraulic presses to ___ corrugated cardboard.", a:"bale", zh:"資源回收廠使用液壓打包機將瓦楞紙板緊密打包。"},
+ {s:"The cooperative ___ tons of dry grass for nearby equestrian clubs.", a:"bales", zh:"合作社為附近的馬術俱樂部捆紮了數以噸計的乾草。"},
+ {s:"They ___ the freshly harvested Timothy grass before storm clouds burst.", a:"baled", zh:"暴風雨來臨前，他們把新收割的梯牧草全部打包收好。"},
+ {s:"Agricultural machines were ___ hay across rolling hill pastures.", a:"baling", zh:"農用機械在起伏的山丘牧場上忙著打捆乾草。"},
+ {s:"Ensure the prairie grass dries completely before you begin to ___ it.", a:"bale", zh:"在開始打包成捆之前，務必確保草原乾草已完全曬乾。"},
+ {s:"The field crew ___ seventy heavy straw bundles before sunset.", a:"baled", zh:"田間作業組在日落前把七十包沉重的稻草打包完畢。"}
+],
+/* 12 raw */
+[
+ {s:"Never eat uncooked or ___ poultry to avoid foodborne illness.", a:"raw", zh:"切勿食用未煮熟或生的家禽肉，以防食源性疾病。"},
+ {s:"The spinning mill imports sacks of ___ cotton fiber from abroad.", a:"raw", zh:"紡紗廠從國外進口一袋袋未加工的生棉纖維。"},
+ {s:"Freezing arctic gales left the skin on his face chapped and ___.", a:"raw", zh:"刺骨的北極寒風讓他臉上的皮膚凍得皸裂紅腫。"},
+ {s:"The chef chopped fresh ___ carrots and celery for the garden dip.", a:"raw", zh:"廚師切碎新鮮的生紅蘿蔔和芹菜來搭配蔬菜沾醬。"},
+ {s:"Heavy industries require plentiful ___ minerals like coal and iron ore.", a:"raw", zh:"重工業需要豐富的天然原料礦物，如煤炭和鐵礦石。"},
+ {s:"The hungry hound gulped down a scrap of ___ meat eagerly.", a:"raw", zh:"飢餓的獵犬急不可耐地吞下一塊生肉碎屑。"},
+ {s:"His vocal cords felt ___ after cheering enthusiastically at match.", a:"raw", zh:"在比賽中狂熱歡呼後，他的聲帶感到發炎紅腫。"},
+ {s:"Many agricultural nations export unrefined ___ sugar to refineries.", a:"raw", zh:"許多農業國將未精煉的原糖粗糖出口給精煉廠。"},
+ {s:"Traditional Japanese sashimi is prepared using impeccably fresh ___ fish.", a:"raw", zh:"傳統的日本生魚片是用無比新鮮的生魚製作而成。"},
+ {s:"The sawmill receives truckloads of ___ timber felled in the hills.", a:"raw", zh:"製材廠接收了一卡車一卡車在山裡砍伐的原木天然木材。"}
+],
+/* 13 tank up */
+[
+ {s:"The interstate tractor-trailer stopped at the rest area to ___.", a:"tank up", zh:"州際半掛拖車在休息區停下以加滿油箱。"},
+ {s:"The long-range cargo plane ___ with tons of jet fuel in hangar.", a:"tanks up", zh:"遠程貨機在機庫裡加滿了數噸航空噴氣燃油。"},
+ {s:"The vintage iron locomotive ___ at the riverside wooden water tower.", a:"tanked up", zh:"古老的鐵路機車在河畔的木製水塔處加滿了水。"},
+ {s:"The ocean container freighter is currently ___ at the bunkering dock.", a:"tanking up", zh:"遠洋貨櫃輪目前正在加燃料碼頭加滿燃油。"},
+ {s:"Remember to ___ before driving across remote desert highways.", a:"tank up", zh:"在駕車穿越偏僻的沙漠公路前，記得加滿油箱。"},
+ {s:"The emergency ambulance fleet ___ every morning before shifts begin.", a:"tanks up", zh:"緊急救護車隊在每天早晨交接班前全部加滿油。"},
+ {s:"The steam train ___ with fifty barrels of water before the pass.", a:"tanked up", zh:"蒸汽火車在翻越隘口前灌滿了五十桶水。"},
+ {s:"The patrol chopper was ___ on the helipad before storm search.", a:"tanking up", zh:"巡邏直升機在風暴搜救前在停機坪上正加滿燃油。"},
+ {s:"Motorists lined up at the fuel pumps to ___ before holidays.", a:"tank up", zh:"車主們在節假日前夕於加油機前排隊加滿油。"},
+ {s:"The naval destroyer ___ from the ocean replenishment oiler.", a:"tanked up", zh:"海軍驅逐艦從遠洋補給加油船那裡加滿了重油。"}
+],
+/* 14 billow */
+[
+ {s:"Thick black plumes of soot ___ from the foundry smokestack.", a:"billow", zh:"厚重漆黑的煤煙如滾滾巨浪般從鑄造廠煙囪湧出。"},
+ {s:"Pure white steam ___ from the whistle valve of locomotive.", a:"billows", zh:"純白色的蒸氣從火車頭的鳴笛閥門中翻滾湧起。"},
+ {s:"Ominous storm clouds ___ across the darkening summer evening sky.", a:"billowed", zh:"不祥的風暴雲在漸暗的夏日傍晚天空中洶湧翻滾。"},
+ {s:"Crisp canvas sails were ___ majestically in the brisk sea trade wind.", a:"billowing", zh:"挺拔的帆布船帆在強勁的海上信風中威風凜凜地鼓脹翻滾。"},
+ {s:"When the fireplace damper shut, smoke began to ___ into living room.", a:"billow", zh:"當壁爐擋板關閉時，煙霧開始翻滾湧進客廳。"},
+ {s:"A giant pillar of volcanic dust ___ kilometers above the crater.", a:"billows", zh:"巨大的火山灰柱在火山口上方數公里處滾滾湧起。"},
+ {s:"Dry yellow dust ___ behind the charging herd of wild horses.", a:"billowed", zh:"乾燥的黃色沙塵在奔馳的野馬群身後滾滾揚起。"},
+ {s:"Light linen curtains were ___ softly in the open mountain window.", a:"billowing", zh:"輕柔的亞麻窗簾在開著的山間窗前輕柔地鼓動翻捲。"},
+ {s:"You can watch sweet cedar wood smoke ___ into the twilight.", a:"billow", zh:"你可以看著香甜的雪松柴煙在暮色中翻騰升空。"},
+ {s:"A wall of thick fog ___ through the canyon, enveloping the bridge.", a:"billowed", zh:"一堵濃霧高牆在峽谷間滾滾湧過，籠罩了整座大橋。"}
+]
+];
+
+/* ---------- 成就設定 ---------- */
+const BADGES_DEF = [
+  {id:"first_win", name:"初入原野", icon:"🌱", desc:"完成任意規模的一場冒險", exp:100},
+  {id:"combo_5", name:"鋒利鐵劍", icon:"⚔️", desc:"達成 5 連擊暴擊 (Combo)", exp:150},
+  {id:"combo_10", name:"附魔鑽石劍", icon:"💎", desc:"達成 10 連擊暴擊 (Combo)", exp:300},
+  {id:"flawless_10", name:"不死圖騰", icon:"🛡️", desc:"單場 10 題以上且命中率 100%", exp:250},
+  {id:"master_50", name:"終界龍征服者", icon:"🐉", desc:"累計挖取回答超過 50 題", exp:400}
+];
+
+const RANKS = [
+  {minExp:0, title:"Lv.1 木劍冒險家", avatar:"🗡️"},
+  {minExp:300, title:"Lv.2 石鎬採集者", avatar:"⛏️"},
+  {minExp:700, title:"Lv.3 鐵甲騎士", avatar:"🛡️"},
+  {minExp:1300, title:"Lv.4 紅石工藝師", avatar:"⚙️"},
+  {minExp:2000, title:"Lv.5 鑽石領主", avatar:"💎"},
+  {minExp:3000, title:"Lv.6 獄髓宗師", avatar:"👑"}
+];
+
+/* ---------- 玩家狀態儲存 (共用 Daylight Quest 設定檔) ---------- */
+const STORAGE_KEY = "mc_daylight_quest_profile";
+let player = {
+  exp: 0,
+  answered: 0,
+  maxCombo: 0,
+  badges: {}
+};
+
+function loadPlayer() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) player = Object.assign(player, JSON.parse(raw));
+  } catch(e){}
+  updatePlayerUI();
+}
+
+function savePlayer() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(player));
+  } catch(e){}
+  updatePlayerUI();
+}
+
+function getRank(exp) {
+  let cur = RANKS[0];
+  for (let r of RANKS) {
+    if (exp >= r.minExp) cur = r;
+  }
+  return cur;
+}
+
+function getNextRank(exp) {
+  for (let r of RANKS) {
+    if (exp < r.minExp) return r;
+  }
+  return null;
+}
+
+function updatePlayerUI() {
+  const r = getRank(player.exp);
+  const nr = getNextRank(player.exp);
+  $('#playerAvatar').textContent = r.avatar;
+  $('#playerRankTitle').textContent = r.title;
+  
+  if (nr) {
+    const span = nr.minExp - r.minExp;
+    const prog = player.exp - r.minExp;
+    const pct = Math.min(100, Math.max(0, (prog / span) * 100));
+    $('#expBar').style.width = pct + '%';
+    $('#expText').textContent = player.exp + ' / ' + nr.minExp + ' EXP';
+  } else {
+    $('#expBar').style.width = '100%';
+    $('#expText').textContent = player.exp + ' EXP (MAX)';
+  }
+
+  $('#statAnswered').textContent = player.answered;
+  $('#statMaxCombo').textContent = player.maxCombo + 'x';
+  const bCount = Object.keys(player.badges).length;
+  $('#statBadges').textContent = bCount + ' / ' + BADGES_DEF.length;
+}
+
+function addExp(n) {
+  const oldRank = getRank(player.exp);
+  player.exp += n;
+  const newRank = getRank(player.exp);
+  if (newRank.minExp > oldRank.minExp) {
+    sfx.levelUp();
+    launchConfetti();
+  }
+  savePlayer();
+}
+
+function checkBadges(sessionCombo, isPerfect, qCount) {
+  const unlocked = [];
+  function grant(id) {
+    if (!player.badges[id]) {
+      player.badges[id] = Date.now();
+      const b = BADGES_DEF.find(x => x.id === id);
+      if (b) {
+        addExp(b.exp);
+        unlocked.push(b);
+      }
+    }
+  }
+
+  grant('first_win');
+  if (sessionCombo >= 5) grant('combo_5');
+  if (sessionCombo >= 10) grant('combo_10');
+  if (isPerfect && qCount >= 10) grant('flawless_10');
+  if (player.answered >= 50) grant('master_50');
+
+  savePlayer();
+  return unlocked;
+}
+
+/* ---------- 遊戲核心流程 ---------- */
+function $(sel){ return document.querySelector(sel); }
+function el(tag, cls, html){
+  const d = document.createElement(tag);
+  if (cls) d.className = cls;
+  if (html !== undefined) d.innerHTML = html;
+  return d;
+}
+function esc(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let totalQ = 25;
+let quizData = [];
+let qIdx = 0;
+let combo = 0;
+let sessionMaxCombo = 0;
+let currentScore = 0;
+let roundGainedExp = 0;
+let correctCount = 0;
+let quizLog = [];
+let isLocked = false;
+let pickedWordIndex = null;
+
+function switchPane(paneId) {
+  ['#paneSetup', '#paneQuest', '#paneResult', '#paneBadges', '#paneKey'].forEach(id => {
+    $(id).classList.add('hidden');
+  });
+  $(paneId).classList.remove('hidden');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function generateQuiz(num) {
+  const all = [];
+  QS.forEach((arr, wi) => {
+    arr.forEach(item => {
+      all.push({ wi: wi, s: item.s, a: item.a, zh: item.zh });
+    });
+  });
+  for (let i = all.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [all[i], all[j]] = [all[j], all[i]];
+  }
+  return all.slice(0, num);
+}
+
+function startAdventure() {
+  sfx.init();
+  sfx.click();
+  quizData = generateQuiz(totalQ);
+  qIdx = 0;
+  combo = 0;
+  sessionMaxCombo = 0;
+  currentScore = 0;
+  roundGainedExp = 0;
+  correctCount = 0;
+  quizLog = [];
+  switchPane('#paneQuest');
+  renderNextQuestion();
+}
+
+function renderNextQuestion() {
+  isLocked = false; pickedWordIndex = null;
+  const q = quizData[qIdx], w = WORDS[q.wi];
+  
+  $('#hudProgress').textContent = 'Q ' + (qIdx+1) + ' / ' + totalQ;
+  $('#hudBar').style.width = (qIdx / totalQ * 100) + '%';
+  $('#hudScore').textContent = '⭐ ' + currentScore;
+  
+  const comboEl = $('#comboAlert');
+  if (combo >= 2) {
+    comboEl.style.display = 'flex';
+    comboEl.textContent = '💥 ' + combo + 'x CRITICAL COMBO!';
+  } else {
+    comboEl.style.display = 'none';
+  }
+
+  $('#qNum').textContent = 'Q' + (qIdx+1);
+  $('#qPos').textContent = w.pos;
+  $('#sentenceBox').innerHTML = esc(q.s).replace('___', '<span class="blank" id="targetBlank">?</span>');
+  
+  $('#interactionArea').classList.remove('hidden');
+  $('#formsArea').innerHTML = '';
+  $('#feedbackArea').innerHTML = '';
+  renderWordBank();
+}
+
+function renderWordBank() {
+  const bank = $('#wordBank');
+  bank.innerHTML = '';
+  WORDS.forEach((w,i) => {
+    const b = el('button','word-btn', w.w);
+    b.type = 'button';
+    b.addEventListener('click', () => onWordSelect(i, b));
+    bank.appendChild(b);
+  });
+}
+
+function onWordSelect(i, btn) {
+  if (isLocked) return;
+  sfx.click();
+  document.querySelectorAll('.word-btn').forEach(n => n.classList.remove('selected'));
+  btn.classList.add('selected');
+  pickedWordIndex = i;
+  
+  const w = WORDS[i];
+  if (w.forms.length === 1) {
+    submitAnswer(w.forms[0].f, i);
+    return;
+  }
+
+  const formsArea = $('#formsArea');
+  formsArea.innerHTML = '';
+  const panel = el('div','forms-panel');
+  panel.appendChild(el('p','forms-title','🔨 選擇「' + w.w + '」的合成形態：'));
+  const grid = el('div','forms-grid');
+  w.forms.forEach(f => {
+    const b = el('button','form-btn', f.f + '<em>(' + f.t + ')</em>');
+    b.type = 'button';
+    b.addEventListener('click', () => submitAnswer(f.f, i));
+    grid.appendChild(b);
+  });
+  panel.appendChild(grid);
+  formsArea.appendChild(panel);
+}
+
+function getGrammarExplanation(q, w) {
+  if (q.exp) return q.exp;
+  const sent = q.s;
+  const ans = q.a;
+  const formObj = (w && w.forms) ? (w.forms.find(f => f.f.toLowerCase() === ans.toLowerCase()) || {}) : {};
+  const tag = formObj.t || '';
+  const pos = w ? w.pos : '';
+  const parts = sent.split('___');
+  const before = parts[0] ? parts[0].trim() : '';
+  const after = parts[1] ? parts[1].trim() : '';
+  const lowerBefore = before.toLowerCase();
+  const lowerAfter = after.toLowerCase();
+  const lowerSent = sent.toLowerCase();
+
+  // 1. 動詞變形：第三人稱單數（加 -s / -es）
+  if (tag.includes('三單') || tag.includes('第三人稱') || (!tag && pos.includes('v') && /[a-z]+(s|es|ies)$/i.test(ans) && !tag.includes('複數'))) {
+    const commaIdx = before.lastIndexOf(',');
+    const mainClause = commaIdx !== -1 ? before.substring(commaIdx + 1).trim() : before;
+    const clauseTokens = mainClause.split(/\s+/).filter(Boolean);
+    const advs = ['always','often','usually','sometimes','seldom','never','currently','now','proudly','cautiously','gently','fiercely','daily','regularly','constantly','frequently'];
+    const filteredTokens = clauseTokens.filter(t => !advs.includes(t.toLowerCase().replace(/[^a-z]/g,'')));
+    const subj = (filteredTokens.length > 0) ? filteredTokens.slice(0, Math.min(filteredTokens.length, 3)).join(' ') : '主詞';
+    return `【現在式第三人稱單數】主詞「${subj}」為第三人稱單數，本句描述規律習慣、普遍真理或當前狀態（現在簡單式），因此動詞需加 -s/-es 變化為「${ans}」。`;
+  }
+
+  // 2. 動詞變形：過去式（加 -ed 或不規則過去式）
+  if (tag.includes('過去') || (!tag && pos.includes('v') && (ans.endsWith('ed') || ['struck','etched','admitted','began','went','came','saw','heard','stood','took','made','built','lost','felt','found','gave','kept','told','knew','thought','wrote','sang','swam','ran','drove','bought','brought','caught','wore','met'].includes(ans.toLowerCase())))) {
+    const pastMarkers = [
+      {k:'yesterday', name:'Yesterday（昨天）'},
+      {k:'last night', name:'last night（昨晚）'},
+      {k:'last week', name:'last week（上週）'},
+      {k:'last month', name:'last month（上個月）'},
+      {k:'last year', name:'last year（去年）'},
+      {k:'ago', name:'ago（以前）'},
+      {k:'originally', name:'originally（最初）'},
+      {k:'at first', name:'at first（起初）'},
+      {k:'in the past', name:'in the past（過去）'},
+      {k:'one day', name:'one day（有一天）'},
+      {k:'initially', name:'initially（最初）'},
+      {k:'centuries ago', name:'centuries ago（幾世紀前）'},
+      {k:'long ago', name:'long ago（很久以前）'},
+      {k:'in ancient times', name:'in ancient times（古代）'}
+    ];
+    const yearMatch = lowerSent.match(/\bin (1[789]\d\d|20[01]\d)\b/);
+    if (yearMatch) {
+      return `【過去式】句中有過去歷史年代「${yearMatch[0]}」，描述過去歷史上已發生的動作，因此動詞需使用過去式（加 -ed 或不規則變化）「${ans}」。`;
+    }
+    const foundMarker = pastMarkers.find(m => lowerSent.includes(m.k));
+    if (foundMarker) {
+      return `【過去式】句中有過去時間標記「${foundMarker.name}」，描述過去發生的現象與已完成的動作，因此動詞需使用過去式（加 -ed 或不規則變化）「${ans}」。`;
+    }
+    return `【過去式】本句敘述故事劇情、歷史事件或過去已發生的動作，因此動詞需使用過去式（加 -ed 或不規則變化）「${ans}」。`;
+  }
+
+  // 3. 動詞變形：-ing (現在分詞 / 進行式 / 動名詞)
+  if (tag.includes('-ing') || tag.includes('分詞') || tag.includes('進行') || ans.toLowerCase().endsWith('ing')) {
+    const beMatch = lowerBefore.match(/\b(am|is|are|was|were|be|been)\s*([a-z]+ly\s+)?$/);
+    if (beMatch) {
+      const beVerb = beMatch[1];
+      return `【進行式】空格前方有 be 動詞「${beVerb}」，構成「be + V-ing」進行式結構，表示當下或當時正在進行的動作，因此動詞需加上 -ing 變為「${ans}」。`;
+    }
+    const prepMatch = lowerBefore.match(/\b(by|for|of|in|at|on|about|after|before|without|from|with|instead of|upon)\s*$/);
+    if (prepMatch) {
+      const prep = prepMatch[1];
+      return `【動名詞】空格緊接在介系詞「${prep}」之後，依英文文法規定，介系詞後接動詞時需轉為動名詞（V-ing），因此動詞加上 -ing 變為「${ans}」。`;
+    }
+    const vMatch = lowerBefore.match(/\b(kept|keep|keeps|enjoy|enjoys|enjoyed|start|started|starts|practice|practiced|finish|finished|loves|loved|hate|hated|avoid|stopped)\s*$/);
+    if (vMatch) {
+      const v = vMatch[1];
+      return `【動名詞作受詞】接在動詞「${v}」之後作受詞，依文法需使用動名詞（V-ing）型態，因此加上 -ing 變為「${ans}」。`;
+    }
+    if (lowerSent.startsWith('look!') || lowerSent.startsWith('listen!')) {
+      return `【現在分詞/進行式】句首有提醒注意當下的感嘆詞，描繪眼下正在生動進行的動作，因此動詞需加上 -ing 變為「${ans}」。`;
+    }
+    return `【現在分詞/進行式】本句表示正在進行的動作或分詞修飾結構，因此動詞加上 -ing 變為「${ans}」。`;
+  }
+
+  // 4. 名詞複數（加 -s / -es / -ies）
+  if (tag.includes('複數') || (pos.includes('n') && !tag.includes('單數') && /[a-z]+(s|es|ies)$/i.test(ans) && !['smoothness','business','witness','glass','grass'].includes(ans.toLowerCase()))) {
+    const quantifiers = [
+      {k:/\b(many)\b/i, name:'many（許多）'},
+      {k:/\b(several)\b/i, name:'several（數個）'},
+      {k:/\b(few|a few)\b/i, name:'few / a few（少數幾個）'},
+      {k:/\b(different)\b/i, name:'different（各種/不同的）'},
+      {k:/\b(various)\b/i, name:'various（各式各樣的）'},
+      {k:/\b(countless)\b/i, name:'countless（無數的）'},
+      {k:/\b(two|three|four|five|six|seven|eight|nine|ten|hundreds of|thousands of|dozens of)\b/i, name:'數量詞'},
+      {k:/\b(both)\b/i, name:'both（兩者）'},
+      {k:/\b(all|all of|all their)\b/i, name:'all（所有）'},
+      {k:/\b(these|those)\b/i, name:'these / those（這些/那些）'},
+      {k:/\b(a lot of|lots of)\b/i, name:'a lot of（許多）'}
+    ];
+    for (let item of quantifiers) {
+      if (item.k.test(lowerBefore)) {
+        return `【複數名詞】空格前方有修飾詞「${item.name}」，明確說明數量為多個，因此名詞需使用複數型態（加 -s/-es/-ies）「${ans}」。`;
+      }
+    }
+    return `【複數名詞】本句指稱多個物品、多種情況或複數對象，因此名詞需使用複數型態（加 -s/-es）「${ans}」。`;
+  }
+
+  // 5. 動詞原形
+  if (tag.includes('原形') || pos.includes('v')) {
+    if (/\bto\s*$/i.test(before)) {
+      return `【不定詞接原形】空格位於不定詞「to」之後，依英文文法規則，不定詞 to 之後必須接動詞原形「${ans}」。`;
+    }
+    const modalMatch = lowerBefore.match(/\b(can|could|will|would|shall|should|must|may|might|do|does|did)\s*$/i);
+    if (modalMatch) {
+      return `【助動詞後接原形】空格位於助動詞「${modalMatch[1]}」之後，依文法規則助動詞後的動詞必須還原為原形「${ans}」。`;
+    }
+    if (/\b(let's|let us|please|make|help)\s*$/i.test(lowerBefore) || lowerBefore === '') {
+      return `【祈使句/使役動詞】此處為祈使句或接在使役/提示詞後，動詞必須使用原形「${ans}」。`;
+    }
+    return `【動詞原形】本句主詞為第一/第二人稱或複數主詞，在現在簡單式中動詞使用原形「${ans}」。`;
+  }
+
+  // 6. 名詞單數 / 不可數
+  if (tag.includes('單數') || tag.includes('不可數') || pos.includes('n')) {
+    const artMatch = lowerBefore.match(/\b(a|an|one|each|every|another|this|that)\s*([a-z]+ly\s+)?([a-z]+\s+)?$/i);
+    if (artMatch) {
+      const art = artMatch[1];
+      return `【單數名詞】空格前方有冠詞或單數限定詞「${art}」，指稱單一事物或對象，因此名詞需使用單數形「${ans}」。`;
+    }
+    if (tag.includes('不可數') || ['smoothness','disappointment','grease','oil','jade','heaven'].includes(ans.toLowerCase())) {
+      return `【不可數名詞】此詞在此處作為不可數物質名詞或抽象概念，不加複數 -s，因此使用原形單數「${ans}」。`;
+    }
+    return `【名詞單數形】本句指稱特定事物或單一概念，因此使用名詞單數形「${ans}」。`;
+  }
+
+  // 7. 形容詞
+  if (tag.includes('形容詞') || pos.includes('adj')) {
+    const nextWord = (after.split(/\s+/)[0] || '').replace(/[^a-zA-Z]/g,'');
+    if (nextWord) {
+      return `【形容詞修飾名詞】空格位於名詞「${nextWord}」之前，扮演形容詞角色修飾該名詞的特徵，因此選擇形容詞「${ans}」。`;
+    }
+    const linkMatch = lowerBefore.match(/\b(is|am|are|was|were|be|been|look|looks|looked|feel|feels|felt|seem|seems|seemed|taste|tasted|sound|sounded)\s*([a-z]+ly\s+)?$/i);
+    if (linkMatch) {
+      return `【形容詞作主詞補語】空格位於連綴動詞／be 動詞（${linkMatch[1]}）之後作主詞補語，描述主詞的狀態與特質，因此選擇形容詞「${ans}」。`;
+    }
+    return `【形容詞】在句中說明人、事、物的特質與樣貌，因此選擇形容詞「${ans}」。`;
+  }
+
+  // 8. 副詞
+  if (tag.includes('副詞') || pos.includes('adv')) {
+    return `【副詞】在句中修飾動詞動作或形容詞程度，說明時間、地點或方式，因此選擇副詞「${ans}」。`;
+  }
+
+  return `【字詞用法】符合本句語境與文法結構，正確填入「${ans}」。`;
+}
+
+function submitAnswer(ans, chosenWordIdx) {
+  if (isLocked) return;
+  isLocked = true;
+  const q = quizData[qIdx], w = WORDS[q.wi];
+  const isCorrect = ans.toLowerCase() === q.a.toLowerCase();
+  
+  player.answered++;
+  if (isCorrect) {
+    combo++;
+    if (combo > sessionMaxCombo) sessionMaxCombo = combo;
+    if (combo > player.maxCombo) player.maxCombo = combo;
+    const earned = 100 + (combo - 1) * 25;
+    currentScore += earned;
+    const expEarned = 50 + (combo - 1) * 10;
+    roundGainedExp += expEarned;
+    addExp(expEarned);
+    sfx.correct(combo);
+  } else {
+    combo = 0;
+    addExp(10);
+    roundGainedExp += 10;
+    sfx.wrong();
+  }
+  savePlayer();
+
+  quizLog.push({q:q, w:w, given:ans, isCorrect:isCorrect, chosenWordIdx:chosenWordIdx});
+
+  const blank = $('#targetBlank');
+  blank.textContent = ans;
+  blank.className = 'blank ' + (isCorrect ? 'good' : 'bad');
+  
+  $('#interactionArea').classList.add('hidden');
+  $('#hudScore').textContent = '⭐ ' + currentScore;
+  $('#hudBar').style.width = ((qIdx+1) / totalQ * 100) + '%';
+
+  const tag = (w.forms.find(f => f.f.toLowerCase() === q.a.toLowerCase()) || {t:''}).t;
+  const fb = el('div', 'feedback-card' + (isCorrect ? '' : ' wrong'));
+  fb.appendChild(el('div','fb-title', isCorrect ? '⚔️ 命中要害！' + (combo >= 2 ? ' ('+combo+'x Combo!)' : '') : '💥 答案錯誤！正確解答：' + q.a));
+  fb.appendChild(el('p','fb-zh', q.zh));
+
+  let note = '<b>' + w.w + '</b>（' + w.pos + '）' + w.zh + ' · 本句使用 <b>' + q.a + '</b>（' + tag + '）';
+  if (!isCorrect && chosenWordIdx != null && chosenWordIdx !== q.wi) {
+    const cw = WORDS[chosenWordIdx];
+    note += '<br>⚠️ 你選擇了 <b>' + cw.w + '</b>（' + cw.pos + '）' + cw.zh;
+  }
+  fb.appendChild(el('div','fb-note', note));
+  const explainBox = el('div', 'fb-explain');
+ explainBox.innerHTML = '<div class="fb-exp-title">💡 解題說明與文法關鍵：</div><div class="fb-exp-text">' + getGrammarExplanation(q, w) + '</div>';
+ fb.appendChild(explainBox);
+
+  const nextBtn = el('button','mc-btn mc-btn-diamond', qIdx + 1 < totalQ ? '前進下一題 ➔' : '結算本次冒險 🏁');
+  nextBtn.type = 'button';
+  nextBtn.style.width = '100%';
+  nextBtn.addEventListener('click', () => {
+    sfx.click();
+    qIdx++;
+    if (qIdx < totalQ) {
+      renderNextQuestion();
+    } else {
+      finishQuiz();
+    }
+  });
+  fb.appendChild(nextBtn);
+  $('#feedbackArea').appendChild(fb);
+  nextBtn.focus();
+}
+
+function finishQuiz() {
+  correctCount = quizLog.filter(x => x.isCorrect).length;
+  const pct = Math.round((correctCount / totalQ) * 100);
+  const isPerfect = pct === 100;
+  
+  if (isPerfect) {
+    launchConfetti();
+    sfx.levelUp();
+  }
+
+  const unlockedBadges = checkBadges(sessionMaxCombo, isPerfect, totalQ);
+
+  $('#finalScore').textContent = currentScore;
+  $('#gainExp').textContent = '+' + roundGainedExp + ' EXP';
+  $('#gainCombo').textContent = '最高連擊: ' + sessionMaxCombo + 'x';
+  
+  const remark = pct === 100 ? '👑 完美全對！你已經徹底精通這 15 個單字！'
+               : pct >= 80 ? '🌟 表現非常優異！只差一點點就滿分了！'
+               : pct >= 60 ? '👍 順利通關！多留意動詞過去式與單複數細節。'
+               : '💪 繼續加油！先查閱下方合成表重新複習，再重新出發！';
+  $('#finalRemark').textContent = '命中率 ' + pct + '% (' + correctCount + '/' + totalQ + ') · ' + remark;
+
+  const list = $('#reviewList');
+  list.innerHTML = '';
+  quizLog.forEach((item, idx) => {
+    const div = el('div', 'review-item' + (item.isCorrect ? '' : ' no'));
+    div.appendChild(el('div','sent', (idx+1) + '. ' + esc(item.q.s).replace('___','<u>'+item.q.a+'</u>')));
+    let wrongTip = '';
+    if (!item.isCorrect) {
+      if (item.chosenWordIdx != null && item.chosenWordIdx !== item.q.wi) {
+        const cw = WORDS[item.chosenWordIdx];
+        wrongTip = ' 你的選擇：<s>'+cw.w+' ('+cw.zh+') 填入 '+item.given+'</s>';
+      } else {
+        wrongTip = ' 你的答案：<s>'+item.given+'</s>';
+      }
+    }
+    div.appendChild(el('div','trans', item.q.zh + ' （' + item.w.w + ' ' + item.w.pos + '）' + wrongTip));
+    div.appendChild(el('div', 'rev-exp', '💡 <b>解題說明：</b>' + getGrammarExplanation(item.q, item.w)));
+    div.appendChild(el('div', 'rev-exp', '💡 <b>解題說明：</b>' + getGrammarExplanation(item.q, item.w)));
+    list.appendChild(div);
+  });
+
+  switchPane('#paneResult');
+}
+
+function renderBadgeHall() {
+  const grid = $('#badgeGrid');
+  grid.innerHTML = '';
+  BADGES_DEF.forEach(b => {
+    const unlocked = !!player.badges[b.id];
+    const c = el('div', 'badge-card' + (unlocked ? ' unlocked' : ''));
+    c.appendChild(el('div','badge-icon', b.icon));
+    const meta = el('div','badge-meta');
+    meta.appendChild(el('div','badge-name', b.name + (unlocked ? ' (已獲得)' : '')));
+    meta.appendChild(el('div','badge-desc', b.desc + ' · 獎勵 +' + b.exp + ' EXP'));
+    c.appendChild(meta);
+    grid.appendChild(c);
+  });
+}
+
+function renderKeySheet() {
+  const tb = $('#keyTableBody');
+  if (tb.children.length > 0) return;
+  WORDS.forEach((w,i) => {
+    const tr = el('tr');
+    tr.appendChild(el('td',null,String(i+1)));
+    tr.appendChild(el('td',null,'<div class="w">'+w.w+'</div><div class="zh">'+w.zh+'</div>'));
+    tr.appendChild(el('td','zh',w.pos));
+    tr.appendChild(el('td','forms', w.forms.map(f => f.f + '（'+f.t+'）').join('、 ')));
+    tb.appendChild(tr);
+  });
+}
+
+/* ---------- 綁定按鈕事件 ---------- */
+document.querySelectorAll('.mode-card').forEach(card => {
+  card.addEventListener('click', () => {
+    sfx.click();
+    document.querySelectorAll('.mode-card').forEach(x => x.setAttribute('aria-pressed','false'));
+    card.setAttribute('aria-pressed','true');
+    totalQ = parseInt(card.dataset.n, 10);
+  });
+});
+
+$('#btnStartGame').addEventListener('click', startAdventure);
+$('#btnPlayAgain').addEventListener('click', () => switchPane('#paneSetup'));
+$('#btnBackHome').addEventListener('click', () => switchPane('#paneSetup'));
+
+$('#btnBadgeHall').addEventListener('click', () => {
+  sfx.click();
+  renderBadgeHall();
+  switchPane('#paneBadges');
+});
+$('#btnBackFromBadges').addEventListener('click', () => { sfx.click(); switchPane('#paneSetup'); });
+
+$('#btnKey').addEventListener('click', () => {
+  sfx.click();
+  renderKeySheet();
+  switchPane('#paneKey');
+});
+$('#btnBackFromKey').addEventListener('click', () => { sfx.click(); switchPane('#paneSetup'); });
+$('#btnRestartFromKey').addEventListener('click', startAdventure);
+
+$('#btnSound').addEventListener('click', () => {
+  sfx.enabled = !sfx.enabled;
+  if (sfx.enabled) sfx.click();
+  $('#btnSound').textContent = sfx.enabled ? '🔊 音效: 開' : '🔇 音效: 關';
+});
+
+loadPlayer();
+</script>
+</body>
+</html>
